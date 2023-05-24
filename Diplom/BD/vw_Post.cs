@@ -23,5 +23,9 @@ namespace Diplom.BD
         public System.DateTime DateStartPost { get; set; }
         public Nullable<System.DateTime> DateEndPost { get; set; }
         public string Example { get; set; }
+        public string Email { get; set; }
+        public string Photo { get; set; }
+        public int Experience { get; set; }
+        public System.DateTime Birthday { get; set; }
     }
 }

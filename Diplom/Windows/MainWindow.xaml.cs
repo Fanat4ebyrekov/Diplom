@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Diplom.Pages;
+using static Diplom.Clases.ClassEntity;
+using Diplom.BD;
+using Diplom.Windows;
 
 namespace Diplom.Windows
 {

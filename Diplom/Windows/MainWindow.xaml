@@ -111,7 +111,25 @@
                         Height="50"
                         Width="150"
                         FontSize="23"
-                        Content="Резюме" 
+                        Content="Отпуска" 
+                        Foreground="White" Background="#FF4BC4F7" 
+                        BorderBrush="{x:Null}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                
+
+                <Button x:Name="btnBusinessTrip"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="3"
+                        Height="50"
+                        Width="150"
+                        FontSize="20"
+                        Content="Командировки" 
                         Foreground="White" Background="#FF4BC4F7" 
                         BorderBrush="{x:Null}">
                     <Button.Resources>
@@ -136,6 +154,7 @@
                         </Style>
                     </Button.Resources>
                 </Button>
+
 
             </Grid>
         </Border>

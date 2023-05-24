@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AddInformation">
           <Key>
             <PropertyRef Name="IdAddInform" />
@@ -140,6 +140,8 @@
           <Property Name="DateStartWork" Type="date" Nullable="false" />
           <Property Name="Experience" Type="int" Nullable="false" />
           <Property Name="GenderID" Type="int" Nullable="false" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="500" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="WorkerPost">
           <Key>
@@ -176,6 +178,8 @@
             <PropertyRef Name="Salary" />
             <PropertyRef Name="Department" />
             <PropertyRef Name="DateStartPost" />
+            <PropertyRef Name="Experience" />
+            <PropertyRef Name="Birthday" />
           </Key>
           <Property Name="FIO" Type="varchar" MaxLength="54" />
           <Property Name="Gender" Type="varchar" MaxLength="3" Nullable="false" />
@@ -186,6 +190,10 @@
           <Property Name="DateStartPost" Type="date" Nullable="false" />
           <Property Name="DateEndPost" Type="date" />
           <Property Name="Example" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="500" />
+          <Property Name="Experience" Type="int" Nullable="false" />
+          <Property Name="Birthday" Type="date" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "Agenstvo_3ISP11_16.dbo.vw_WorkerVocation" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -462,7 +470,11 @@
     [vw_Post].[Department] AS [Department], 
     [vw_Post].[DateStartPost] AS [DateStartPost], 
     [vw_Post].[DateEndPost] AS [DateEndPost], 
-    [vw_Post].[Example] AS [Example]
+    [vw_Post].[Example] AS [Example], 
+    [vw_Post].[Email] AS [Email], 
+    [vw_Post].[Photo] AS [Photo], 
+    [vw_Post].[Experience] AS [Experience], 
+    [vw_Post].[Birthday] AS [Birthday]
     FROM [dbo].[vw_Post] AS [vw_Post]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_WorkerVocation" EntityType="Self.vw_WorkerVocation" store:Type="Views" store:Schema="dbo">
@@ -526,8 +538,7 @@
             <End Role="WorkerPost" EntitySet="WorkerPost" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -539,449 +550,7 @@
           <Property Name="FIO" Type="String" MaxLength="152" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Кол_во_образований" Type="Int32" />
         </ComplexType>
-        <EntityType Name="AddInformation">
-          <Key>
-            <PropertyRef Name="IdAddInform" />
-          </Key>
-          <Property Name="IdAddInform" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WorkerID" Type="Int32" Nullable="false" />
-          <Property Name="Conscripted" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PcEducation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DriverCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Childrens" Type="Int32" Nullable="false" />
-          <Property Name="FamilyStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Worker" Relationship="Self.FK_AddInformation_Worker" FromRole="AddInformation" ToRole="Worker" />
-        </EntityType>
-        <EntityType Name="BusinessTrip">
-          <Key>
-            <PropertyRef Name="IdBusinessTrip" />
-          </Key>
-          <Property Name="IdBusinessTrip" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WorkerID" Type="Int32" Nullable="false" />
-          <Property Name="PlaceOfBusinessTrip" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="NumberOrder" Type="Int32" Nullable="false" />
-          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="QtyDay" Type="Int32" Nullable="false" />
-          <Property Name="GoalTrip" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Worker" Relationship="Self.FK_BusinessTrip_Worker" FromRole="BusinessTrip" ToRole="Worker" />
-        </EntityType>
-        <EntityType Name="Department">
-          <Key>
-            <PropertyRef Name="IdDepartment" />
-          </Key>
-          <Property Name="IdDepartment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameDepartment" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Post" Relationship="Self.FK_Post_Department" FromRole="Department" ToRole="Post" />
-        </EntityType>
-        <EntityType Name="Education">
-          <Key>
-            <PropertyRef Name="IdEducation" />
-          </Key>
-          <Property Name="IdEducation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TypeEducationID" Type="Int32" Nullable="false" />
-          <Property Name="Specialization" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NameOrganization" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="EndEducation" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="TypeEducation" Relationship="Self.FK_Education_TypeEducation" FromRole="Education" ToRole="TypeEducation" />
-          <NavigationProperty Name="EducationWorker" Relationship="Self.FK_EducationWorker_Education" FromRole="Education" ToRole="EducationWorker" />
-        </EntityType>
-        <EntityType Name="EducationWorker">
-          <Key>
-            <PropertyRef Name="IdEducationWorker" />
-          </Key>
-          <Property Name="IdEducationWorker" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WorkerID" Type="Int32" Nullable="false" />
-          <Property Name="EducationID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Education" Relationship="Self.FK_EducationWorker_Education" FromRole="EducationWorker" ToRole="Education" />
-          <NavigationProperty Name="Worker" Relationship="Self.FK_EducationWorker_Worker" FromRole="EducationWorker" ToRole="Worker" />
-        </EntityType>
-        <EntityType Name="Gender">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameGender" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Worker" Relationship="Self.FK_Worker_Gender" FromRole="Gender" ToRole="Worker" />
-        </EntityType>
-        <EntityType Name="MedicalExamination">
-          <Key>
-            <PropertyRef Name="IdMed" />
-          </Key>
-          <Property Name="IdMed" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WorkerID" Type="Int32" Nullable="false" />
-          <Property Name="DateExamination" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="PlaceExamination" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Conclusion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Worker" Relationship="Self.FK_MedicalExamination_Worker" FromRole="MedicalExamination" ToRole="Worker" />
-        </EntityType>
-        <EntityType Name="Post">
-          <Key>
-            <PropertyRef Name="IdPost" />
-          </Key>
-          <Property Name="IdPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NamePost" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Salary" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Department" Relationship="Self.FK_Post_Department" FromRole="Post" ToRole="Department" />
-          <NavigationProperty Name="WorkerPost" Relationship="Self.FK_WorkerPost_Post" FromRole="Post" ToRole="WorkerPost" />
-        </EntityType>
-        <EntityType Name="Price">
-          <Key>
-            <PropertyRef Name="IdPrice" />
-          </Key>
-          <Property Name="IdPrice" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WorkerID" Type="Int32" Nullable="false" />
-          <Property Name="Cost" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <NavigationProperty Name="Worker" Relationship="Self.FK_Price_Worker" FromRole="Price" ToRole="Worker" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="TypeEducation">
-          <Key>
-            <PropertyRef Name="IdType" />
-          </Key>
-          <Property Name="IdType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameEducation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Education" Relationship="Self.FK_Education_TypeEducation" FromRole="TypeEducation" ToRole="Education" />
-        </EntityType>
-        <EntityType Name="TypeFooting">
-          <Key>
-            <PropertyRef Name="IdFooting" />
-          </Key>
-          <Property Name="IdFooting" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameFooting" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Vacation" Relationship="Self.FK_Vacation_TypeFooting" FromRole="TypeFooting" ToRole="Vacation" />
-        </EntityType>
-        <EntityType Name="Vacation">
-          <Key>
-            <PropertyRef Name="IdVacation" />
-          </Key>
-          <Property Name="IdVacation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WorkerID" Type="Int32" Nullable="false" />
-          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="AddTime" Type="Int32" />
-          <Property Name="QtyDay" Type="Int32" Nullable="false" />
-          <Property Name="FootingID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TypeFooting" Relationship="Self.FK_Vacation_TypeFooting" FromRole="Vacation" ToRole="TypeFooting" />
-          <NavigationProperty Name="Worker" Relationship="Self.FK_Vacation_Worker" FromRole="Vacation" ToRole="Worker" />
-        </EntityType>
-        <EntityType Name="Worker">
-          <Key>
-            <PropertyRef Name="IdWorker" />
-          </Key>
-          <Property Name="IdWorker" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Patronimyc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Phone" Type="String" MaxLength="21" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PassSer" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="PassNum" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="DateStartWork" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Experience" Type="Int32" Nullable="false" />
-          <Property Name="GenderID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AddInformation" Relationship="Self.FK_AddInformation_Worker" FromRole="Worker" ToRole="AddInformation" />
-          <NavigationProperty Name="BusinessTrip" Relationship="Self.FK_BusinessTrip_Worker" FromRole="Worker" ToRole="BusinessTrip" />
-          <NavigationProperty Name="EducationWorker" Relationship="Self.FK_EducationWorker_Worker" FromRole="Worker" ToRole="EducationWorker" />
-          <NavigationProperty Name="Gender" Relationship="Self.FK_Worker_Gender" FromRole="Worker" ToRole="Gender" />
-          <NavigationProperty Name="MedicalExamination" Relationship="Self.FK_MedicalExamination_Worker" FromRole="Worker" ToRole="MedicalExamination" />
-          <NavigationProperty Name="Price" Relationship="Self.FK_Price_Worker" FromRole="Worker" ToRole="Price" />
-          <NavigationProperty Name="Vacation" Relationship="Self.FK_Vacation_Worker" FromRole="Worker" ToRole="Vacation" />
-          <NavigationProperty Name="WorkerPost" Relationship="Self.FK_WorkerPost_Worker" FromRole="Worker" ToRole="WorkerPost" />
-        </EntityType>
-        <EntityType Name="WorkerPost">
-          <Key>
-            <PropertyRef Name="IdWorkerPost" />
-          </Key>
-          <Property Name="IdWorkerPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WorkerID" Type="Int32" Nullable="false" />
-          <Property Name="PostID" Type="Int32" Nullable="false" />
-          <Property Name="DateStartPost" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DateEndPost" Type="DateTime" Precision="0" />
-          <Property Name="Example" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Post" Relationship="Self.FK_WorkerPost_Post" FromRole="WorkerPost" ToRole="Post" />
-          <NavigationProperty Name="Worker" Relationship="Self.FK_WorkerPost_Worker" FromRole="WorkerPost" ToRole="Worker" />
-        </EntityType>
-        <EntityType Name="vm_WorkerBusinessTrip">
-          <Key>
-            <PropertyRef Name="ФИО_сторудника" />
-            <PropertyRef Name="Дата_начала_командировки" />
-            <PropertyRef Name="Кол_во_дней" />
-            <PropertyRef Name="Цель_поездки" />
-          </Key>
-          <Property Name="ФИО_сторудника" Type="String" MaxLength="152" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Дата_начала_командировки" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Кол_во_дней" Type="Int32" Nullable="false" />
-          <Property Name="Цель_поездки" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="vw_Post">
-          <Key>
-            <PropertyRef Name="Gender" />
-            <PropertyRef Name="Phone" />
-            <PropertyRef Name="Post" />
-            <PropertyRef Name="Salary" />
-            <PropertyRef Name="Department" />
-            <PropertyRef Name="DateStartPost" />
-          </Key>
-          <Property Name="FIO" Type="String" MaxLength="54" FixedLength="false" Unicode="false" />
-          <Property Name="Gender" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Phone" Type="String" MaxLength="21" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Post" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Salary" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="Department" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DateStartPost" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DateEndPost" Type="DateTime" Precision="0" />
-          <Property Name="Example" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vw_WorkerVocation">
-          <Key>
-            <PropertyRef Name="ФИО_сторудника" />
-            <PropertyRef Name="Дата_начала_отпуска" />
-            <PropertyRef Name="Кол_во_дней" />
-            <PropertyRef Name="Тип_отпуска" />
-          </Key>
-          <Property Name="ФИО_сторудника" Type="String" MaxLength="152" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Дата_начала_отпуска" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Кол_во_дней" Type="Int32" Nullable="false" />
-          <Property Name="Тип_отпуска" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_AddInformation_Worker">
-          <End Role="Worker" Type="Self.Worker" Multiplicity="1" />
-          <End Role="AddInformation" Type="Self.AddInformation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Worker">
-              <PropertyRef Name="IdWorker" />
-            </Principal>
-            <Dependent Role="AddInformation">
-              <PropertyRef Name="WorkerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BusinessTrip_Worker">
-          <End Role="Worker" Type="Self.Worker" Multiplicity="1" />
-          <End Role="BusinessTrip" Type="Self.BusinessTrip" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Worker">
-              <PropertyRef Name="IdWorker" />
-            </Principal>
-            <Dependent Role="BusinessTrip">
-              <PropertyRef Name="WorkerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Post_Department">
-          <End Role="Department" Type="Self.Department" Multiplicity="1" />
-          <End Role="Post" Type="Self.Post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="IdDepartment" />
-            </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="DepartmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Education_TypeEducation">
-          <End Role="TypeEducation" Type="Self.TypeEducation" Multiplicity="1" />
-          <End Role="Education" Type="Self.Education" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TypeEducation">
-              <PropertyRef Name="IdType" />
-            </Principal>
-            <Dependent Role="Education">
-              <PropertyRef Name="TypeEducationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EducationWorker_Education">
-          <End Role="Education" Type="Self.Education" Multiplicity="1" />
-          <End Role="EducationWorker" Type="Self.EducationWorker" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Education">
-              <PropertyRef Name="IdEducation" />
-            </Principal>
-            <Dependent Role="EducationWorker">
-              <PropertyRef Name="EducationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EducationWorker_Worker">
-          <End Role="Worker" Type="Self.Worker" Multiplicity="1" />
-          <End Role="EducationWorker" Type="Self.EducationWorker" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Worker">
-              <PropertyRef Name="IdWorker" />
-            </Principal>
-            <Dependent Role="EducationWorker">
-              <PropertyRef Name="WorkerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Worker_Gender">
-          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
-          <End Role="Worker" Type="Self.Worker" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gender">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Worker">
-              <PropertyRef Name="GenderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MedicalExamination_Worker">
-          <End Role="Worker" Type="Self.Worker" Multiplicity="1" />
-          <End Role="MedicalExamination" Type="Self.MedicalExamination" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Worker">
-              <PropertyRef Name="IdWorker" />
-            </Principal>
-            <Dependent Role="MedicalExamination">
-              <PropertyRef Name="WorkerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_WorkerPost_Post">
-          <End Role="Post" Type="Self.Post" Multiplicity="1" />
-          <End Role="WorkerPost" Type="Self.WorkerPost" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Post">
-              <PropertyRef Name="IdPost" />
-            </Principal>
-            <Dependent Role="WorkerPost">
-              <PropertyRef Name="PostID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Price_Worker">
-          <End Role="Worker" Type="Self.Worker" Multiplicity="1" />
-          <End Role="Price" Type="Self.Price" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Worker">
-              <PropertyRef Name="IdWorker" />
-            </Principal>
-            <Dependent Role="Price">
-              <PropertyRef Name="WorkerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Vacation_TypeFooting">
-          <End Role="TypeFooting" Type="Self.TypeFooting" Multiplicity="1" />
-          <End Role="Vacation" Type="Self.Vacation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TypeFooting">
-              <PropertyRef Name="IdFooting" />
-            </Principal>
-            <Dependent Role="Vacation">
-              <PropertyRef Name="FootingID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Vacation_Worker">
-          <End Role="Worker" Type="Self.Worker" Multiplicity="1" />
-          <End Role="Vacation" Type="Self.Vacation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Worker">
-              <PropertyRef Name="IdWorker" />
-            </Principal>
-            <Dependent Role="Vacation">
-              <PropertyRef Name="WorkerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_WorkerPost_Worker">
-          <End Role="Worker" Type="Self.Worker" Multiplicity="1" />
-          <End Role="WorkerPost" Type="Self.WorkerPost" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Worker">
-              <PropertyRef Name="IdWorker" />
-            </Principal>
-            <Dependent Role="WorkerPost">
-              <PropertyRef Name="WorkerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AddInformation" EntityType="Self.AddInformation" />
-          <EntitySet Name="BusinessTrip" EntityType="Self.BusinessTrip" />
-          <EntitySet Name="Department" EntityType="Self.Department" />
-          <EntitySet Name="Education" EntityType="Self.Education" />
-          <EntitySet Name="EducationWorker" EntityType="Self.EducationWorker" />
-          <EntitySet Name="Gender" EntityType="Self.Gender" />
-          <EntitySet Name="MedicalExamination" EntityType="Self.MedicalExamination" />
-          <EntitySet Name="Post" EntityType="Self.Post" />
-          <EntitySet Name="Price" EntityType="Self.Price" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="TypeEducation" EntityType="Self.TypeEducation" />
-          <EntitySet Name="TypeFooting" EntityType="Self.TypeFooting" />
-          <EntitySet Name="Vacation" EntityType="Self.Vacation" />
-          <EntitySet Name="Worker" EntityType="Self.Worker" />
-          <EntitySet Name="WorkerPost" EntityType="Self.WorkerPost" />
-          <EntitySet Name="vm_WorkerBusinessTrip" EntityType="Self.vm_WorkerBusinessTrip" />
-          <EntitySet Name="vw_Post" EntityType="Self.vw_Post" />
-          <EntitySet Name="vw_WorkerVocation" EntityType="Self.vw_WorkerVocation" />
-          <AssociationSet Name="FK_AddInformation_Worker" Association="Self.FK_AddInformation_Worker">
-            <End Role="Worker" EntitySet="Worker" />
-            <End Role="AddInformation" EntitySet="AddInformation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BusinessTrip_Worker" Association="Self.FK_BusinessTrip_Worker">
-            <End Role="Worker" EntitySet="Worker" />
-            <End Role="BusinessTrip" EntitySet="BusinessTrip" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Post_Department" Association="Self.FK_Post_Department">
-            <End Role="Department" EntitySet="Department" />
-            <End Role="Post" EntitySet="Post" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Education_TypeEducation" Association="Self.FK_Education_TypeEducation">
-            <End Role="TypeEducation" EntitySet="TypeEducation" />
-            <End Role="Education" EntitySet="Education" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EducationWorker_Education" Association="Self.FK_EducationWorker_Education">
-            <End Role="Education" EntitySet="Education" />
-            <End Role="EducationWorker" EntitySet="EducationWorker" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EducationWorker_Worker" Association="Self.FK_EducationWorker_Worker">
-            <End Role="Worker" EntitySet="Worker" />
-            <End Role="EducationWorker" EntitySet="EducationWorker" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Worker_Gender" Association="Self.FK_Worker_Gender">
-            <End Role="Gender" EntitySet="Gender" />
-            <End Role="Worker" EntitySet="Worker" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MedicalExamination_Worker" Association="Self.FK_MedicalExamination_Worker">
-            <End Role="Worker" EntitySet="Worker" />
-            <End Role="MedicalExamination" EntitySet="MedicalExamination" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WorkerPost_Post" Association="Self.FK_WorkerPost_Post">
-            <End Role="Post" EntitySet="Post" />
-            <End Role="WorkerPost" EntitySet="WorkerPost" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Price_Worker" Association="Self.FK_Price_Worker">
-            <End Role="Worker" EntitySet="Worker" />
-            <End Role="Price" EntitySet="Price" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vacation_TypeFooting" Association="Self.FK_Vacation_TypeFooting">
-            <End Role="TypeFooting" EntitySet="TypeFooting" />
-            <End Role="Vacation" EntitySet="Vacation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vacation_Worker" Association="Self.FK_Vacation_Worker">
-            <End Role="Worker" EntitySet="Worker" />
-            <End Role="Vacation" EntitySet="Vacation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WorkerPost_Worker" Association="Self.FK_WorkerPost_Worker">
-            <End Role="Worker" EntitySet="Worker" />
-            <End Role="WorkerPost" EntitySet="WorkerPost" />
-          </AssociationSet>
           <FunctionImport Name="fn_SalaryForMoth" IsComposable="true" ReturnType="Collection(Model.fn_SalaryForMoth_Result)" />
           <FunctionImport Name="func_EducationWorker" IsComposable="true" ReturnType="Collection(Model.func_EducationWorker_Result)" />
           <FunctionImport Name="pr_Exp" ReturnType="Collection(Int32)" />
@@ -1028,6 +597,76 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="AddInformation" EntityType="Model.AddInformation" />
+          <EntitySet Name="BusinessTrip" EntityType="Model.BusinessTrip" />
+          <EntitySet Name="Department" EntityType="Model.Department" />
+          <EntitySet Name="Education" EntityType="Model.Education" />
+          <EntitySet Name="EducationWorker" EntityType="Model.EducationWorker" />
+          <EntitySet Name="Gender" EntityType="Model.Gender" />
+          <EntitySet Name="MedicalExamination" EntityType="Model.MedicalExamination" />
+          <EntitySet Name="Post" EntityType="Model.Post" />
+          <EntitySet Name="Price" EntityType="Model.Price" />
+          <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagrams" />
+          <EntitySet Name="TypeEducation" EntityType="Model.TypeEducation" />
+          <EntitySet Name="TypeFooting" EntityType="Model.TypeFooting" />
+          <EntitySet Name="Vacation" EntityType="Model.Vacation" />
+          <EntitySet Name="Worker" EntityType="Model.Worker" />
+          <EntitySet Name="WorkerPost" EntityType="Model.WorkerPost" />
+          <EntitySet Name="vm_WorkerBusinessTrip" EntityType="Model.vm_WorkerBusinessTrip" />
+          <EntitySet Name="vw_Post" EntityType="Model.vw_Post" />
+          <EntitySet Name="vw_WorkerVocation" EntityType="Model.vw_WorkerVocation" />
+          <AssociationSet Name="FK_AddInformation_Worker" Association="Model.FK_AddInformation_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="AddInformation" EntitySet="AddInformation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessTrip_Worker" Association="Model.FK_BusinessTrip_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="BusinessTrip" EntitySet="BusinessTrip" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Department" Association="Model.FK_Post_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Education_TypeEducation" Association="Model.FK_Education_TypeEducation">
+            <End Role="TypeEducation" EntitySet="TypeEducation" />
+            <End Role="Education" EntitySet="Education" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EducationWorker_Education" Association="Model.FK_EducationWorker_Education">
+            <End Role="Education" EntitySet="Education" />
+            <End Role="EducationWorker" EntitySet="EducationWorker" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EducationWorker_Worker" Association="Model.FK_EducationWorker_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="EducationWorker" EntitySet="EducationWorker" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Worker_Gender" Association="Model.FK_Worker_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Worker" EntitySet="Worker" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalExamination_Worker" Association="Model.FK_MedicalExamination_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="MedicalExamination" EntitySet="MedicalExamination" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerPost_Post" Association="Model.FK_WorkerPost_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="WorkerPost" EntitySet="WorkerPost" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Price_Worker" Association="Model.FK_Price_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="Price" EntitySet="Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vacation_TypeFooting" Association="Model.FK_Vacation_TypeFooting">
+            <End Role="TypeFooting" EntitySet="TypeFooting" />
+            <End Role="Vacation" EntitySet="Vacation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vacation_Worker" Association="Model.FK_Vacation_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="Vacation" EntitySet="Vacation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerPost_Worker" Association="Model.FK_WorkerPost_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="WorkerPost" EntitySet="WorkerPost" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="pr_SalaryForMoth_Result">
           <Property Type="String" Name="FIO" Nullable="true" MaxLength="54" />
@@ -1044,209 +683,392 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="AddInformation">
+          <Key>
+            <PropertyRef Name="IdAddInform" />
+          </Key>
+          <Property Name="IdAddInform" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkerID" Type="Int32" Nullable="false" />
+          <Property Name="Conscripted" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PcEducation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DriverCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Childrens" Type="Int32" Nullable="false" />
+          <Property Name="FamilyStatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Worker" Relationship="Model.FK_AddInformation_Worker" FromRole="AddInformation" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="BusinessTrip">
+          <Key>
+            <PropertyRef Name="IdBusinessTrip" />
+          </Key>
+          <Property Name="IdBusinessTrip" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkerID" Type="Int32" Nullable="false" />
+          <Property Name="PlaceOfBusinessTrip" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="NumberOrder" Type="Int32" Nullable="false" />
+          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="QtyDay" Type="Int32" Nullable="false" />
+          <Property Name="GoalTrip" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Worker" Relationship="Model.FK_BusinessTrip_Worker" FromRole="BusinessTrip" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="IdDepartment" />
+          </Key>
+          <Property Name="IdDepartment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameDepartment" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Post" Relationship="Model.FK_Post_Department" FromRole="Department" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Education">
+          <Key>
+            <PropertyRef Name="IdEducation" />
+          </Key>
+          <Property Name="IdEducation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeEducationID" Type="Int32" Nullable="false" />
+          <Property Name="Specialization" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="NameOrganization" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="EndEducation" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="TypeEducation" Relationship="Model.FK_Education_TypeEducation" FromRole="Education" ToRole="TypeEducation" />
+          <NavigationProperty Name="EducationWorker" Relationship="Model.FK_EducationWorker_Education" FromRole="Education" ToRole="EducationWorker" />
+        </EntityType>
+        <EntityType Name="EducationWorker">
+          <Key>
+            <PropertyRef Name="IdEducationWorker" />
+          </Key>
+          <Property Name="IdEducationWorker" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkerID" Type="Int32" Nullable="false" />
+          <Property Name="EducationID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Education" Relationship="Model.FK_EducationWorker_Education" FromRole="EducationWorker" ToRole="Education" />
+          <NavigationProperty Name="Worker" Relationship="Model.FK_EducationWorker_Worker" FromRole="EducationWorker" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameGender" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Worker" Relationship="Model.FK_Worker_Gender" FromRole="Gender" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="MedicalExamination">
+          <Key>
+            <PropertyRef Name="IdMed" />
+          </Key>
+          <Property Name="IdMed" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkerID" Type="Int32" Nullable="false" />
+          <Property Name="DateExamination" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PlaceExamination" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Conclusion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Worker" Relationship="Model.FK_MedicalExamination_Worker" FromRole="MedicalExamination" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="IdPost" />
+          </Key>
+          <Property Name="IdPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamePost" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Salary" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="Model.FK_Post_Department" FromRole="Post" ToRole="Department" />
+          <NavigationProperty Name="WorkerPost" Relationship="Model.FK_WorkerPost_Post" FromRole="Post" ToRole="WorkerPost" />
+        </EntityType>
+        <EntityType Name="Price">
+          <Key>
+            <PropertyRef Name="IdPrice" />
+          </Key>
+          <Property Name="IdPrice" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkerID" Type="Int32" Nullable="false" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <NavigationProperty Name="Worker" Relationship="Model.FK_Price_Worker" FromRole="Price" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TypeEducation">
+          <Key>
+            <PropertyRef Name="IdType" />
+          </Key>
+          <Property Name="IdType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameEducation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Education" Relationship="Model.FK_Education_TypeEducation" FromRole="TypeEducation" ToRole="Education" />
+        </EntityType>
+        <EntityType Name="TypeFooting">
+          <Key>
+            <PropertyRef Name="IdFooting" />
+          </Key>
+          <Property Name="IdFooting" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameFooting" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Vacation" Relationship="Model.FK_Vacation_TypeFooting" FromRole="TypeFooting" ToRole="Vacation" />
+        </EntityType>
+        <EntityType Name="Vacation">
+          <Key>
+            <PropertyRef Name="IdVacation" />
+          </Key>
+          <Property Name="IdVacation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkerID" Type="Int32" Nullable="false" />
+          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AddTime" Type="Int32" />
+          <Property Name="QtyDay" Type="Int32" Nullable="false" />
+          <Property Name="FootingID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TypeFooting" Relationship="Model.FK_Vacation_TypeFooting" FromRole="Vacation" ToRole="TypeFooting" />
+          <NavigationProperty Name="Worker" Relationship="Model.FK_Vacation_Worker" FromRole="Vacation" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="Worker">
+          <Key>
+            <PropertyRef Name="IdWorker" />
+          </Key>
+          <Property Name="IdWorker" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Patronimyc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="true" />
+          <Property Name="PassSer" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="PassNum" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="DateStartWork" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Experience" Type="Int32" Nullable="false" />
+          <Property Name="GenderID" Type="Int32" Nullable="false" />
+          <Property Name="Photo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AddInformation" Relationship="Model.FK_AddInformation_Worker" FromRole="Worker" ToRole="AddInformation" />
+          <NavigationProperty Name="BusinessTrip" Relationship="Model.FK_BusinessTrip_Worker" FromRole="Worker" ToRole="BusinessTrip" />
+          <NavigationProperty Name="EducationWorker" Relationship="Model.FK_EducationWorker_Worker" FromRole="Worker" ToRole="EducationWorker" />
+          <NavigationProperty Name="Gender" Relationship="Model.FK_Worker_Gender" FromRole="Worker" ToRole="Gender" />
+          <NavigationProperty Name="MedicalExamination" Relationship="Model.FK_MedicalExamination_Worker" FromRole="Worker" ToRole="MedicalExamination" />
+          <NavigationProperty Name="Price" Relationship="Model.FK_Price_Worker" FromRole="Worker" ToRole="Price" />
+          <NavigationProperty Name="Vacation" Relationship="Model.FK_Vacation_Worker" FromRole="Worker" ToRole="Vacation" />
+          <NavigationProperty Name="WorkerPost" Relationship="Model.FK_WorkerPost_Worker" FromRole="Worker" ToRole="WorkerPost" />
+        </EntityType>
+        <EntityType Name="WorkerPost">
+          <Key>
+            <PropertyRef Name="IdWorkerPost" />
+          </Key>
+          <Property Name="IdWorkerPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkerID" Type="Int32" Nullable="false" />
+          <Property Name="PostID" Type="Int32" Nullable="false" />
+          <Property Name="DateStartPost" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateEndPost" Type="DateTime" Precision="0" />
+          <Property Name="Example" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Post" Relationship="Model.FK_WorkerPost_Post" FromRole="WorkerPost" ToRole="Post" />
+          <NavigationProperty Name="Worker" Relationship="Model.FK_WorkerPost_Worker" FromRole="WorkerPost" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="vm_WorkerBusinessTrip">
+          <Key>
+            <PropertyRef Name="ФИО_сторудника" />
+            <PropertyRef Name="Дата_начала_командировки" />
+            <PropertyRef Name="Кол_во_дней" />
+            <PropertyRef Name="Цель_поездки" />
+          </Key>
+          <Property Name="ФИО_сторудника" Type="String" Nullable="false" MaxLength="152" FixedLength="false" Unicode="false" />
+          <Property Name="Дата_начала_командировки" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Кол_во_дней" Type="Int32" Nullable="false" />
+          <Property Name="Цель_поездки" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vw_Post">
+          <Key>
+            <PropertyRef Name="Gender" />
+            <PropertyRef Name="Phone" />
+            <PropertyRef Name="Post" />
+            <PropertyRef Name="Salary" />
+            <PropertyRef Name="Department" />
+            <PropertyRef Name="DateStartPost" />
+            <PropertyRef Name="Experience" />
+            <PropertyRef Name="Birthday" />
+          </Key>
+          <Property Name="FIO" Type="String" MaxLength="54" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="true" />
+          <Property Name="Post" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Salary" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="Department" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateStartPost" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateEndPost" Type="DateTime" Precision="0" />
+          <Property Name="Example" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Experience" Type="Int32" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="vw_WorkerVocation">
+          <Key>
+            <PropertyRef Name="ФИО_сторудника" />
+            <PropertyRef Name="Дата_начала_отпуска" />
+            <PropertyRef Name="Кол_во_дней" />
+            <PropertyRef Name="Тип_отпуска" />
+          </Key>
+          <Property Name="ФИО_сторудника" Type="String" Nullable="false" MaxLength="152" FixedLength="false" Unicode="false" />
+          <Property Name="Дата_начала_отпуска" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Кол_во_дней" Type="Int32" Nullable="false" />
+          <Property Name="Тип_отпуска" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_AddInformation_Worker">
+          <End Type="Model.Worker" Role="Worker" Multiplicity="1" />
+          <End Type="Model.AddInformation" Role="AddInformation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="IdWorker" />
+            </Principal>
+            <Dependent Role="AddInformation">
+              <PropertyRef Name="WorkerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessTrip_Worker">
+          <End Type="Model.Worker" Role="Worker" Multiplicity="1" />
+          <End Type="Model.BusinessTrip" Role="BusinessTrip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="IdWorker" />
+            </Principal>
+            <Dependent Role="BusinessTrip">
+              <PropertyRef Name="WorkerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Department">
+          <End Type="Model.Department" Role="Department" Multiplicity="1" />
+          <End Type="Model.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="IdDepartment" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Education_TypeEducation">
+          <End Type="Model.TypeEducation" Role="TypeEducation" Multiplicity="1" />
+          <End Type="Model.Education" Role="Education" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeEducation">
+              <PropertyRef Name="IdType" />
+            </Principal>
+            <Dependent Role="Education">
+              <PropertyRef Name="TypeEducationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EducationWorker_Education">
+          <End Type="Model.Education" Role="Education" Multiplicity="1" />
+          <End Type="Model.EducationWorker" Role="EducationWorker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Education">
+              <PropertyRef Name="IdEducation" />
+            </Principal>
+            <Dependent Role="EducationWorker">
+              <PropertyRef Name="EducationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EducationWorker_Worker">
+          <End Type="Model.Worker" Role="Worker" Multiplicity="1" />
+          <End Type="Model.EducationWorker" Role="EducationWorker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="IdWorker" />
+            </Principal>
+            <Dependent Role="EducationWorker">
+              <PropertyRef Name="WorkerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Worker_Gender">
+          <End Type="Model.Gender" Role="Gender" Multiplicity="1" />
+          <End Type="Model.Worker" Role="Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalExamination_Worker">
+          <End Type="Model.Worker" Role="Worker" Multiplicity="1" />
+          <End Type="Model.MedicalExamination" Role="MedicalExamination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="IdWorker" />
+            </Principal>
+            <Dependent Role="MedicalExamination">
+              <PropertyRef Name="WorkerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerPost_Post">
+          <End Type="Model.Post" Role="Post" Multiplicity="1" />
+          <End Type="Model.WorkerPost" Role="WorkerPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="IdPost" />
+            </Principal>
+            <Dependent Role="WorkerPost">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Price_Worker">
+          <End Type="Model.Worker" Role="Worker" Multiplicity="1" />
+          <End Type="Model.Price" Role="Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="IdWorker" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="WorkerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vacation_TypeFooting">
+          <End Type="Model.TypeFooting" Role="TypeFooting" Multiplicity="1" />
+          <End Type="Model.Vacation" Role="Vacation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeFooting">
+              <PropertyRef Name="IdFooting" />
+            </Principal>
+            <Dependent Role="Vacation">
+              <PropertyRef Name="FootingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vacation_Worker">
+          <End Type="Model.Worker" Role="Worker" Multiplicity="1" />
+          <End Type="Model.Vacation" Role="Vacation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="IdWorker" />
+            </Principal>
+            <Dependent Role="Vacation">
+              <PropertyRef Name="WorkerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerPost_Worker">
+          <End Type="Model.Worker" Role="Worker" Multiplicity="1" />
+          <End Type="Model.WorkerPost" Role="WorkerPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="IdWorker" />
+            </Principal>
+            <Dependent Role="WorkerPost">
+              <PropertyRef Name="WorkerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="Entities">
-          <EntitySetMapping Name="AddInformation">
-            <EntityTypeMapping TypeName="Model.AddInformation">
-              <MappingFragment StoreEntitySet="AddInformation">
-                <ScalarProperty Name="IdAddInform" ColumnName="IdAddInform" />
-                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
-                <ScalarProperty Name="Conscripted" ColumnName="Conscripted" />
-                <ScalarProperty Name="PcEducation" ColumnName="PcEducation" />
-                <ScalarProperty Name="DriverCategory" ColumnName="DriverCategory" />
-                <ScalarProperty Name="Childrens" ColumnName="Childrens" />
-                <ScalarProperty Name="FamilyStatus" ColumnName="FamilyStatus" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BusinessTrip">
-            <EntityTypeMapping TypeName="Model.BusinessTrip">
-              <MappingFragment StoreEntitySet="BusinessTrip">
-                <ScalarProperty Name="IdBusinessTrip" ColumnName="IdBusinessTrip" />
-                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
-                <ScalarProperty Name="PlaceOfBusinessTrip" ColumnName="PlaceOfBusinessTrip" />
-                <ScalarProperty Name="NumberOrder" ColumnName="NumberOrder" />
-                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
-                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
-                <ScalarProperty Name="QtyDay" ColumnName="QtyDay" />
-                <ScalarProperty Name="GoalTrip" ColumnName="GoalTrip" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Department">
-            <EntityTypeMapping TypeName="Model.Department">
-              <MappingFragment StoreEntitySet="Department">
-                <ScalarProperty Name="IdDepartment" ColumnName="IdDepartment" />
-                <ScalarProperty Name="NameDepartment" ColumnName="NameDepartment" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Education">
-            <EntityTypeMapping TypeName="Model.Education">
-              <MappingFragment StoreEntitySet="Education">
-                <ScalarProperty Name="IdEducation" ColumnName="IdEducation" />
-                <ScalarProperty Name="TypeEducationID" ColumnName="TypeEducationID" />
-                <ScalarProperty Name="Specialization" ColumnName="Specialization" />
-                <ScalarProperty Name="NameOrganization" ColumnName="NameOrganization" />
-                <ScalarProperty Name="EndEducation" ColumnName="EndEducation" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EducationWorker">
-            <EntityTypeMapping TypeName="Model.EducationWorker">
-              <MappingFragment StoreEntitySet="EducationWorker">
-                <ScalarProperty Name="IdEducationWorker" ColumnName="IdEducationWorker" />
-                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
-                <ScalarProperty Name="EducationID" ColumnName="EducationID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Gender">
-            <EntityTypeMapping TypeName="Model.Gender">
-              <MappingFragment StoreEntitySet="Gender">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="NameGender" ColumnName="NameGender" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MedicalExamination">
-            <EntityTypeMapping TypeName="Model.MedicalExamination">
-              <MappingFragment StoreEntitySet="MedicalExamination">
-                <ScalarProperty Name="IdMed" ColumnName="IdMed" />
-                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
-                <ScalarProperty Name="DateExamination" ColumnName="DateExamination" />
-                <ScalarProperty Name="PlaceExamination" ColumnName="PlaceExamination" />
-                <ScalarProperty Name="Conclusion" ColumnName="Conclusion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Post">
-            <EntityTypeMapping TypeName="Model.Post">
-              <MappingFragment StoreEntitySet="Post">
-                <ScalarProperty Name="IdPost" ColumnName="IdPost" />
-                <ScalarProperty Name="NamePost" ColumnName="NamePost" />
-                <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Price">
-            <EntityTypeMapping TypeName="Model.Price">
-              <MappingFragment StoreEntitySet="Price">
-                <ScalarProperty Name="IdPrice" ColumnName="IdPrice" />
-                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
-                <ScalarProperty Name="Cost" ColumnName="Cost" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Model.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TypeEducation">
-            <EntityTypeMapping TypeName="Model.TypeEducation">
-              <MappingFragment StoreEntitySet="TypeEducation">
-                <ScalarProperty Name="IdType" ColumnName="IdType" />
-                <ScalarProperty Name="NameEducation" ColumnName="NameEducation" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TypeFooting">
-            <EntityTypeMapping TypeName="Model.TypeFooting">
-              <MappingFragment StoreEntitySet="TypeFooting">
-                <ScalarProperty Name="IdFooting" ColumnName="IdFooting" />
-                <ScalarProperty Name="NameFooting" ColumnName="NameFooting" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Vacation">
-            <EntityTypeMapping TypeName="Model.Vacation">
-              <MappingFragment StoreEntitySet="Vacation">
-                <ScalarProperty Name="IdVacation" ColumnName="IdVacation" />
-                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
-                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
-                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
-                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
-                <ScalarProperty Name="QtyDay" ColumnName="QtyDay" />
-                <ScalarProperty Name="FootingID" ColumnName="FootingID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Worker">
-            <EntityTypeMapping TypeName="Model.Worker">
-              <MappingFragment StoreEntitySet="Worker">
-                <ScalarProperty Name="IdWorker" ColumnName="IdWorker" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Patronimyc" ColumnName="Patronimyc" />
-                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="PassSer" ColumnName="PassSer" />
-                <ScalarProperty Name="PassNum" ColumnName="PassNum" />
-                <ScalarProperty Name="DateStartWork" ColumnName="DateStartWork" />
-                <ScalarProperty Name="Experience" ColumnName="Experience" />
-                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WorkerPost">
-            <EntityTypeMapping TypeName="Model.WorkerPost">
-              <MappingFragment StoreEntitySet="WorkerPost">
-                <ScalarProperty Name="IdWorkerPost" ColumnName="IdWorkerPost" />
-                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
-                <ScalarProperty Name="PostID" ColumnName="PostID" />
-                <ScalarProperty Name="DateStartPost" ColumnName="DateStartPost" />
-                <ScalarProperty Name="DateEndPost" ColumnName="DateEndPost" />
-                <ScalarProperty Name="Example" ColumnName="Example" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vm_WorkerBusinessTrip">
-            <EntityTypeMapping TypeName="Model.vm_WorkerBusinessTrip">
-              <MappingFragment StoreEntitySet="vm_WorkerBusinessTrip">
-                <ScalarProperty Name="ФИО_сторудника" ColumnName="ФИО сторудника" />
-                <ScalarProperty Name="Дата_начала_командировки" ColumnName="Дата начала командировки" />
-                <ScalarProperty Name="Кол_во_дней" ColumnName="Кол-во дней" />
-                <ScalarProperty Name="Цель_поездки" ColumnName="Цель поездки" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_Post">
-            <EntityTypeMapping TypeName="Model.vw_Post">
-              <MappingFragment StoreEntitySet="vw_Post">
-                <ScalarProperty Name="FIO" ColumnName="FIO" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Post" ColumnName="Post" />
-                <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="Department" ColumnName="Department" />
-                <ScalarProperty Name="DateStartPost" ColumnName="DateStartPost" />
-                <ScalarProperty Name="DateEndPost" ColumnName="DateEndPost" />
-                <ScalarProperty Name="Example" ColumnName="Example" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_WorkerVocation">
-            <EntityTypeMapping TypeName="Model.vw_WorkerVocation">
-              <MappingFragment StoreEntitySet="vw_WorkerVocation">
-                <ScalarProperty Name="ФИО_сторудника" ColumnName="ФИО сторудника" />
-                <ScalarProperty Name="Дата_начала_отпуска" ColumnName="Дата начала отпуска" />
-                <ScalarProperty Name="Кол_во_дней" ColumnName="Кол-во дней" />
-                <ScalarProperty Name="Тип_отпуска" ColumnName="Тип отпуска" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionName="Хранилище Model.fn_SalaryForMoth" FunctionImportName="fn_SalaryForMoth">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model.fn_SalaryForMoth_Result">
@@ -1298,6 +1120,209 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище Model.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище Model.sp_upgraddiagrams" />
+          <EntitySetMapping Name="AddInformation">
+            <EntityTypeMapping TypeName="Model.AddInformation">
+              <MappingFragment StoreEntitySet="AddInformation">
+                <ScalarProperty Name="FamilyStatus" ColumnName="FamilyStatus" />
+                <ScalarProperty Name="Childrens" ColumnName="Childrens" />
+                <ScalarProperty Name="DriverCategory" ColumnName="DriverCategory" />
+                <ScalarProperty Name="PcEducation" ColumnName="PcEducation" />
+                <ScalarProperty Name="Conscripted" ColumnName="Conscripted" />
+                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
+                <ScalarProperty Name="IdAddInform" ColumnName="IdAddInform" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BusinessTrip">
+            <EntityTypeMapping TypeName="Model.BusinessTrip">
+              <MappingFragment StoreEntitySet="BusinessTrip">
+                <ScalarProperty Name="GoalTrip" ColumnName="GoalTrip" />
+                <ScalarProperty Name="QtyDay" ColumnName="QtyDay" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="NumberOrder" ColumnName="NumberOrder" />
+                <ScalarProperty Name="PlaceOfBusinessTrip" ColumnName="PlaceOfBusinessTrip" />
+                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
+                <ScalarProperty Name="IdBusinessTrip" ColumnName="IdBusinessTrip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Department">
+            <EntityTypeMapping TypeName="Model.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="NameDepartment" ColumnName="NameDepartment" />
+                <ScalarProperty Name="IdDepartment" ColumnName="IdDepartment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Education">
+            <EntityTypeMapping TypeName="Model.Education">
+              <MappingFragment StoreEntitySet="Education">
+                <ScalarProperty Name="EndEducation" ColumnName="EndEducation" />
+                <ScalarProperty Name="NameOrganization" ColumnName="NameOrganization" />
+                <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+                <ScalarProperty Name="TypeEducationID" ColumnName="TypeEducationID" />
+                <ScalarProperty Name="IdEducation" ColumnName="IdEducation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EducationWorker">
+            <EntityTypeMapping TypeName="Model.EducationWorker">
+              <MappingFragment StoreEntitySet="EducationWorker">
+                <ScalarProperty Name="EducationID" ColumnName="EducationID" />
+                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
+                <ScalarProperty Name="IdEducationWorker" ColumnName="IdEducationWorker" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gender">
+            <EntityTypeMapping TypeName="Model.Gender">
+              <MappingFragment StoreEntitySet="Gender">
+                <ScalarProperty Name="NameGender" ColumnName="NameGender" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedicalExamination">
+            <EntityTypeMapping TypeName="Model.MedicalExamination">
+              <MappingFragment StoreEntitySet="MedicalExamination">
+                <ScalarProperty Name="Conclusion" ColumnName="Conclusion" />
+                <ScalarProperty Name="PlaceExamination" ColumnName="PlaceExamination" />
+                <ScalarProperty Name="DateExamination" ColumnName="DateExamination" />
+                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
+                <ScalarProperty Name="IdMed" ColumnName="IdMed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post">
+            <EntityTypeMapping TypeName="Model.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="NamePost" ColumnName="NamePost" />
+                <ScalarProperty Name="IdPost" ColumnName="IdPost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Price">
+            <EntityTypeMapping TypeName="Model.Price">
+              <MappingFragment StoreEntitySet="Price">
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
+                <ScalarProperty Name="IdPrice" ColumnName="IdPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeEducation">
+            <EntityTypeMapping TypeName="Model.TypeEducation">
+              <MappingFragment StoreEntitySet="TypeEducation">
+                <ScalarProperty Name="NameEducation" ColumnName="NameEducation" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeFooting">
+            <EntityTypeMapping TypeName="Model.TypeFooting">
+              <MappingFragment StoreEntitySet="TypeFooting">
+                <ScalarProperty Name="NameFooting" ColumnName="NameFooting" />
+                <ScalarProperty Name="IdFooting" ColumnName="IdFooting" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vacation">
+            <EntityTypeMapping TypeName="Model.Vacation">
+              <MappingFragment StoreEntitySet="Vacation">
+                <ScalarProperty Name="FootingID" ColumnName="FootingID" />
+                <ScalarProperty Name="QtyDay" ColumnName="QtyDay" />
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
+                <ScalarProperty Name="IdVacation" ColumnName="IdVacation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Worker">
+            <EntityTypeMapping TypeName="Model.Worker">
+              <MappingFragment StoreEntitySet="Worker">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="DateStartWork" ColumnName="DateStartWork" />
+                <ScalarProperty Name="PassNum" ColumnName="PassNum" />
+                <ScalarProperty Name="PassSer" ColumnName="PassSer" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Patronimyc" ColumnName="Patronimyc" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="IdWorker" ColumnName="IdWorker" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkerPost">
+            <EntityTypeMapping TypeName="Model.WorkerPost">
+              <MappingFragment StoreEntitySet="WorkerPost">
+                <ScalarProperty Name="Example" ColumnName="Example" />
+                <ScalarProperty Name="DateEndPost" ColumnName="DateEndPost" />
+                <ScalarProperty Name="DateStartPost" ColumnName="DateStartPost" />
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="WorkerID" ColumnName="WorkerID" />
+                <ScalarProperty Name="IdWorkerPost" ColumnName="IdWorkerPost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vm_WorkerBusinessTrip">
+            <EntityTypeMapping TypeName="Model.vm_WorkerBusinessTrip">
+              <MappingFragment StoreEntitySet="vm_WorkerBusinessTrip">
+                <ScalarProperty Name="Цель_поездки" ColumnName="Цель поездки" />
+                <ScalarProperty Name="Кол_во_дней" ColumnName="Кол-во дней" />
+                <ScalarProperty Name="Дата_начала_командировки" ColumnName="Дата начала командировки" />
+                <ScalarProperty Name="ФИО_сторудника" ColumnName="ФИО сторудника" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Post">
+            <EntityTypeMapping TypeName="Model.vw_Post">
+              <MappingFragment StoreEntitySet="vw_Post">
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Example" ColumnName="Example" />
+                <ScalarProperty Name="DateEndPost" ColumnName="DateEndPost" />
+                <ScalarProperty Name="DateStartPost" ColumnName="DateStartPost" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Post" ColumnName="Post" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_WorkerVocation">
+            <EntityTypeMapping TypeName="Model.vw_WorkerVocation">
+              <MappingFragment StoreEntitySet="vw_WorkerVocation">
+                <ScalarProperty Name="Тип_отпуска" ColumnName="Тип отпуска" />
+                <ScalarProperty Name="Кол_во_дней" ColumnName="Кол-во дней" />
+                <ScalarProperty Name="Дата_начала_отпуска" ColumnName="Дата начала отпуска" />
+                <ScalarProperty Name="ФИО_сторудника" ColumnName="ФИО сторудника" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

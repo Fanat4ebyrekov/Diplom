@@ -10,24 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Diplom.Windows
+namespace Diplom.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для MoreInfoWindow.xaml
+    /// Логика взаимодействия для VacationPage.xaml
     /// </summary>
-    public partial class MoreInfoWindow : Window
+    public partial class VacationPage : Page
     {
-        public MoreInfoWindow(BD.vw_Post vw_Post)
+        public VacationPage()
         {
             InitializeComponent();
-
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

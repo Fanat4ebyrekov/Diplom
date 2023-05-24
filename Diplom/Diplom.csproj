@@ -149,6 +149,9 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Clases\ClassEntity.cs" />
+    <Compile Include="Pages\VacationPage.xaml.cs">
+      <DependentUpon>VacationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\WorkerPage.xaml.cs">
       <DependentUpon>WorkerPage.xaml</DependentUpon>
     </Compile>
@@ -158,6 +161,10 @@
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Pages\VacationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\WorkerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -238,6 +245,15 @@
       <DependentUpon>DB.edmx</DependentUpon>
       <LastGenOutput>DB.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\Worker1.jpg" />
+    <Resource Include="Images\Worker2.jpg" />
+    <Resource Include="Images\Worker3.jpg" />
+    <Resource Include="Images\Worker4.jpg" />
+    <Resource Include="Images\Worker5.jpg" />
+    <Resource Include="Images\Worker6.jpg" />
+    <Resource Include="Images\Worker7.jpg" />
+    <Resource Include="Images\Worker8.jpg" />
+    <Resource Include="Images\Worker9.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -31,7 +31,10 @@ namespace Diplom.Pages
 
         private void btnMoreInfo_Click(object sender, RoutedEventArgs e)
         {
-            MoreInfoWindow moreInfoWindow = new MoreInfoWindow();
+            BD.vw_Post vw_Post = AllWorker.SelectedItem as BD.vw_Post;
+
+
+            MoreInfoWindow moreInfoWindow = new MoreInfoWindow(vw_Post);
             moreInfoWindow.Show();
         }
     }

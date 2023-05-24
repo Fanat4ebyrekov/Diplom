@@ -37,6 +37,8 @@ namespace Diplom.BD
         public System.DateTime DateStartWork { get; set; }
         public int Experience { get; set; }
         public int GenderID { get; set; }
+        public string Photo { get; set; }
+        public string Email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AddInformation> AddInformation { get; set; }
@@ -53,7 +55,5 @@ namespace Diplom.BD
         public virtual ICollection<Vacation> Vacation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WorkerPost> WorkerPost { get; set; }
-
-        public string FIO { get => $" {FirstName} {LastName} {Patronimyc}"; }
     }
 }

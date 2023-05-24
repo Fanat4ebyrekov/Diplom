@@ -54,7 +54,7 @@
 
             <TextBlock 
                 Grid.Row="2"
-                Text="i.ivanov@gmail.com"
+                Text="ivanovivan123@mail.ru"
                 FontSize="12"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
@@ -171,8 +171,9 @@
                 Source="/Images/Worker.jpg" 
                 />
 
-            <Button Style="{DynamicResource MyButtonStyle}"
-                BorderBrush="{x:Null}" 
+            <Button x:Name="btnClose"
+                    Style="{DynamicResource MyButtonStyle}"
+                    BorderBrush="{x:Null}" 
                     Foreground="Black" 
                     Background="{x:Null}" 
                     Grid.Column="2"
@@ -181,6 +182,7 @@
                     FontSize="30"
                     Height="80"
                     Width="250"
+                    Click="btnClose_Click"
                 />
 
         </Grid>
