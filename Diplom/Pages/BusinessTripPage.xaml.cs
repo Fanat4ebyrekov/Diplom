@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,35 +18,29 @@ using Diplom.Windows;
 
 namespace Diplom.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для VacationPage.xaml
+    /// <summary>   
+    /// Логика взаимодействия для BusinessTripPage.xaml
     /// </summary>
-    public partial class VacationPage : Page
+    public partial class BusinessTripPage : Page
     {
-      
-
-        public VacationPage(Windows.MainWindow mainWindow)
+        public BusinessTripPage(Windows.MainWindow mainWindow)
         {
             InitializeComponent();
-            AllWorker.ItemsSource = context.vw_WorkerVocation.ToList();
-
-            
+            AllWorker.ItemsSource = context.vm_WorkerBusinessTrip.ToList();
         }
 
-        public VacationPage(Windows.MenegerWindow menegerWindow)
+        public BusinessTripPage(Windows.MenegerWindow menegerWindow)
         {
             InitializeComponent();
-            AllWorker.ItemsSource = context.vw_WorkerVocation.ToList();
+            AllWorker.ItemsSource = context.vm_WorkerBusinessTrip.ToList();
             btnDelete.Visibility = Visibility.Hidden;
             btnEdit.Visibility = Visibility.Hidden;
-
         }
 
-        private void btnAddVac_Click(object sender, RoutedEventArgs e)
+        private void btnAddTrip_Click(object sender, RoutedEventArgs e)
         {
-            AddVacationWindow addVacationWindow = new AddVacationWindow();
-            addVacationWindow.Show();
-            
+            AddTripWindow addTripWindow = new AddTripWindow();
+            addTripWindow.Show();
         }
     }
 }

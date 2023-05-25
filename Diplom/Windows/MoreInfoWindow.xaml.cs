@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static Diplom.Clases.ClassEntity;
+using Diplom.BD;
+using System.IO;
 
 namespace Diplom.Windows
 {
@@ -22,6 +25,15 @@ namespace Diplom.Windows
         public MoreInfoWindow(BD.vw_Post vw_Post)
         {
             InitializeComponent();
+            tbEmail.Text = vw_Post.Email;
+            tbBirthday.Text = vw_Post.Birthday.ToString();
+            tbDepartment.Text = vw_Post.Department;
+            tbEducation.Text = vw_Post.Experience.ToString() + " " + "года/лет";
+            tbPhone.Text = vw_Post.Phone;
+            tbPost.Text = vw_Post.Post;
+            tbFIO.Text = vw_Post.FIO;
+
+            
 
         }
 

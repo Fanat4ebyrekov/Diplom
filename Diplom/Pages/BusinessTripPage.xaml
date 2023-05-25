@@ -1,4 +1,4 @@
-﻿<Page x:Class="Diplom.Pages.VacationPage"
+﻿<Page x:Class="Diplom.Pages.BusinessTripPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:Diplom.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="VacationPage">
+      Title="BusinessTripPage"
+      >
 
     <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
@@ -48,14 +49,14 @@
             </Button.Resources>
         </Button>
 
-        <Button x:Name="btnAddVac"
+        <Button x:Name="btnAddTrip"
                 Height="40"
                 Width="100"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="250 0 0 0"
                 Content="Добавить"
-                Click="btnAddVac_Click">
+                Click="btnAddTrip_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -63,8 +64,8 @@
             </Button.Resources>
         </Button>
 
-        <Button x:Name="btnEdit"
-                Height="40"
+        <Button  x:Name="btnEdit"
+            Height="40"
                 Width="100"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
@@ -150,7 +151,7 @@
                             <TextBlock 
                                Grid.Row="0"
                                Grid.Column="1"
-                               Text="Дата начала отпуска:"
+                               Text="Дата начала командировки:"
                                VerticalAlignment="Center"
                                Margin="10 26 0 0"
                                FontSize="18"
@@ -172,9 +173,9 @@
                             <TextBlock 
                                Grid.Row="0"
                                Grid.Column="1"
-                               Text="Дата конца отпуска:"
+                               Text="Дата окончания отпуска:"
                                VerticalAlignment="Center"
-                               Margin="200 26 0 0"
+                               Margin="250 26 0 0"
                                FontSize="18"
                                HorizontalAlignment="Left"
                                Foreground="Black" 
@@ -185,7 +186,7 @@
                                Grid.RowSpan="2"
                                Text="2020-05-16"
                                FontSize="15"
-                               Margin="200 0 0 10"
+                               Margin="250 0 0 10"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left"
                                Foreground="Black"        
@@ -193,7 +194,7 @@
 
 
                             <TextBlock 
-                               Text="Тип отпуска:"
+                               Text="Цель командировки:"
                                FontSize="23"
                                Grid.Column="1"
                                Grid.Row="1"
@@ -206,7 +207,7 @@
                             <TextBlock 
                                Grid.Column="1"
                                Grid.RowSpan="2"
-                               Text="{Binding Path = Footing}"
+                               Text="{Binding Path = PurposeOfTheTrip}"
                                FontSize="15"
                                Margin="10 0 0 15"
                                VerticalAlignment="Bottom"

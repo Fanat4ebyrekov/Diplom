@@ -1,16 +1,15 @@
-﻿<Window x:Class="Diplom.Windows.MainWindow"
+﻿<Window x:Class="Diplom.Windows.MenegerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Diplom.Windows"
         mc:Ignorable="d"
-        Title="MainWindow" 
+        Title="MenegerWindow" 
         Height="500" 
         Width="1000"
         WindowStartupLocation="CenterScreen"
-        
-        ResizeMode="CanMinimize">
+        >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.4*"/>
@@ -106,7 +105,7 @@
                 </Button>
 
 
-                <Button x:Name="btnVac"
+                <Button x:Name="btnVacation"
                         Grid.Row="1"
                         Grid.ColumnSpan="3"
                         Height="50"
@@ -115,7 +114,7 @@
                         Content="Отпуска" 
                         Foreground="White" Background="#FF4BC4F7" 
                         BorderBrush="{x:Null}"
-                        Click="btnVac_Click">
+                        Click="btnVacation_Click">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -123,7 +122,7 @@
                     </Button.Resources>
                 </Button>
 
-                
+
 
                 <Button x:Name="btnBusinessTrip"
                         Grid.Row="2"

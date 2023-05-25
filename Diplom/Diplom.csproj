@@ -115,6 +115,9 @@
     <Compile Include="BD\pr_SalaryForMoth_Result.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="BD\Role.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="BD\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
@@ -149,11 +152,30 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Clases\ClassEntity.cs" />
+    <Compile Include="Clases\PersonalDate.cs" />
+    <Compile Include="Pages\BusinessTripPage.xaml.cs">
+      <DependentUpon>BusinessTripPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\VacationPage.xaml.cs">
       <DependentUpon>VacationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\WorkerPage.xaml.cs">
       <DependentUpon>WorkerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddTripWindow.xaml.cs">
+      <DependentUpon>AddTripWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddVacationWindow.xaml.cs">
+      <DependentUpon>AddVacationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddWorkerPostWindow.xaml.cs">
+      <DependentUpon>AddWorkerPostWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddWorkerWindow.xaml.cs">
+      <DependentUpon>AddWorkerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MenegerWindow.xaml.cs">
+      <DependentUpon>MenegerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MoreInfoWindow.xaml.cs">
       <DependentUpon>MoreInfoWindow.xaml</DependentUpon>
@@ -161,11 +183,35 @@
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Pages\BusinessTripPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\VacationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\WorkerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AddTripWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AddVacationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AddWorkerPostWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AddWorkerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MenegerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

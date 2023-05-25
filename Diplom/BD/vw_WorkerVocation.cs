@@ -14,9 +14,10 @@ namespace Diplom.BD
     
     public partial class vw_WorkerVocation
     {
-        public string ФИО_сторудника { get; set; }
-        public System.DateTime Дата_начала_отпуска { get; set; }
-        public int Кол_во_дней { get; set; }
-        public string Тип_отпуска { get; set; }
+        public string FIO { get; set; }
+        public System.DateTime DateStartVoc { get; set; }
+        public int QtyDayVac { get; set; }
+        public string Footing { get; set; }
+        public string Photo { get; set; }
     }
 }

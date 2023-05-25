@@ -15,7 +15,7 @@
         AllowsTransparency="True"
         >
     <Border CornerRadius="40" 
-            Background="White">
+            Background="AliceBlue">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -32,9 +32,10 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Column="1"
-                Grid.ColumnSpan="2"
-                       Text="Иван Иванов Иваныч"
+            <TextBlock x:Name="tbFIO"
+                       Grid.Column="1"
+                       Grid.ColumnSpan="2"
+                       Text=""
                        FontSize="30"
                        Margin="10 0 0 0"
                        VerticalAlignment="Center"
@@ -52,9 +53,9 @@
                 FontSize="12"
                 />
 
-            <TextBlock 
+            <TextBlock x:Name="tbEmail"
                 Grid.Row="2"
-                Text="ivanovivan123@mail.ru"
+                Text=""
                 FontSize="12"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
@@ -73,9 +74,10 @@
                 />
 
             <TextBlock 
+                x:Name="tbPost"
                 Grid.Row="2"
                 Grid.Column="1"
-                Text="Инженер"
+                Text=""
                 FontSize="12"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
@@ -94,9 +96,10 @@
                 />
 
             <TextBlock 
+                x:Name="tbPhone"
                 Grid.Row="3"
                 Grid.Column="2"
-                Text="+7(800)555-35-35"
+                Text=""
                 FontSize="12"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
@@ -115,13 +118,15 @@
                 />
 
             <TextBlock 
+                x:Name="tbBirthday"
                 Grid.Row="2"
                 Grid.Column="3"
-                Text="07.07.2002"
+                Text=""
                 FontSize="12"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Margin="6 0 0 0"     
+                Margin="6 0 0 0"
+                Style="{Binding StringFormat=dd MMMM yyyy}"
                 />
 
             <TextBlock
@@ -136,9 +141,10 @@
                 />
 
             <TextBlock 
+                x:Name="tbEducation"
                 Grid.Row="3"
                 Grid.Column="0"
-                Text="10 год/лет"
+                Text=""
                 FontSize="12"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
@@ -157,9 +163,10 @@
                 />
 
             <TextBlock 
+                x:Name="tbDepartment"
                 Grid.Row="3"
                 Grid.Column="1"
-                Text="Отдел инженерной геодезии («красных линий»)"
+                Text=""
                 TextWrapping="Wrap"
                 FontSize="12"
                 HorizontalAlignment="Left"
@@ -168,7 +175,8 @@
                 />
 
             <Image Grid.RowSpan="2"
-                Source="/Images/Worker.jpg" 
+                   x:Name="photoWorker"
+                   Source="/Images/Worker.jpg"
                 />
 
             <Button x:Name="btnClose"

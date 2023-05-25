@@ -8,14 +8,139 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="WorkerPage">
 
-    <Grid>
-        <ListView
+    <Grid Background="AliceBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.8*"/>
+            <RowDefinition Height="6*"/>
+        </Grid.RowDefinitions>
+
+        <TextBox
+            x:Name="tbSearch"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            VerticalContentAlignment="Center"
+            Margin="20 0"
+            FontSize="20"
+            Height="55"
+            Width="200" 
+            Background="{x:Null}" 
+            BorderBrush="{x:Null}" 
+            SelectionBrush="{x:Null}"/>
+
+        <ComboBox 
+                  Height="40"
+                  Width="220"
+                  Margin="250 0 0 0"
+                  HorizontalAlignment="Left"
+            />
+        <Button x:Name="btnYvol"
+            Height="30"
+                Width="100"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="10"
+                Content="Уволить"
+                Click="btnYvol_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="btnAddEmp"
+                Height="30"
+                Width="100"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="250 0 0 0"
+                Content="Добавить"
+                Click="btnAddEmp_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="btnAddPost"
+            Height="30"
+                Width="100"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="0 0 120 0"
+                FontSize="9"
+                Content="Назначить должность"
+                Click="btnAddPost_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="btnAddPost1"
+                Grid.RowSpan="2"
+            Height="30"
+                Width="100"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="0 70 170 0"
+                FontSize="9"
+                Content="Изменить"
+                Click="btnAddPost_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="btnAddPost12"
+                Grid.RowSpan="2"
+            Height="30"
+                Width="100"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="0 70 60 0"
+                FontSize="9"
+                Content="Удалить"
+                Click="btnAddPost_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <TextBlock
+            IsHitTestVisible="False"
+            FontSize="35"
+            TextAlignment="Left"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Margin="20 0"
+            Text="Поиск"
+            Foreground="Gray">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text,ElementName=tbSearch}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <ListView Grid.Row="3"
             x:Name="AllWorker"
             Background="Transparent"
             Foreground="White"
             FontSize="25"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-            d:ItemsSource="{d:SampleData ItemCount=5}"
+            d:ItemsSource="{d:SampleData ItemCount=5}" BorderBrush="{x:Null}"
             >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -28,7 +153,7 @@
                 BorderBrush="DarkGray"
                 BorderThickness="2"
                 CornerRadius="10"
-                Width="580"
+                Width="720"
                 Height="200"
                 Margin="10">
                         <Grid>

@@ -34,11 +34,14 @@ namespace Diplom.BD
         public string Phone { get; set; }
         public string PassSer { get; set; }
         public string PassNum { get; set; }
-        public System.DateTime DateStartWork { get; set; }
+        public Nullable<System.DateTime> DateStartWork { get; set; }
         public int Experience { get; set; }
         public int GenderID { get; set; }
         public string Photo { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
+        public Nullable<int> RoleID { get; set; }
+        public string Address { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AddInformation> AddInformation { get; set; }
@@ -51,9 +54,12 @@ namespace Diplom.BD
         public virtual ICollection<MedicalExamination> MedicalExamination { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Price> Price { get; set; }
+        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vacation> Vacation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WorkerPost> WorkerPost { get; set; }
+
+        public string FullName { get => $"{FirstName} {LastName} {Patronimyc}"; }
     }
 }

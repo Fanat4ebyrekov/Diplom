@@ -19,11 +19,11 @@ using Diplom.Windows;
 namespace Diplom.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для MenegerWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MenegerWindow : Window
     {
-        public MainWindow()
+        public MenegerWindow()
         {
             InitializeComponent();
             AllInformation.Content = new WorkerPage(this);
@@ -31,7 +31,17 @@ namespace Diplom.Windows
 
         private void btnWorker_Click(object sender, RoutedEventArgs e)
         {
+            AllInformation.Content = new WorkerPage(this);
+        }
 
+        private void btnVacation_Click(object sender, RoutedEventArgs e)
+        {
+            AllInformation.Navigate(new VacationPage(this));
+        }
+
+        private void btnBusinessTrip_Click(object sender, RoutedEventArgs e)
+        {
+            AllInformation.Navigate(new BusinessTripPage(this));
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
@@ -40,16 +50,6 @@ namespace Diplom.Windows
             AuthorizationWindow authorizationWindow = new AuthorizationWindow();
             authorizationWindow.Show();
             this.Close();
-        }
-
-        private void btnVac_Click(object sender, RoutedEventArgs e)
-        {
-            AllInformation.Navigate(new VacationPage(this));
-        }
-
-        private void btnBusinessTrip_Click(object sender, RoutedEventArgs e)
-        {
-            AllInformation.Navigate(new BusinessTripPage(this));
         }
     }
 }

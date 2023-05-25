@@ -12,17 +12,18 @@ namespace Diplom.BD
     using System;
     using System.Collections.Generic;
     
-    public partial class Vacation
+    public partial class Role
     {
-        public int IdVacation { get; set; }
-        public int WorkerID { get; set; }
-        public System.DateTime DateStart { get; set; }
-        public Nullable<System.DateTime> DateEnd { get; set; }
-        public Nullable<int> AddTime { get; set; }
-        public int QtyDay { get; set; }
-        public int FootingID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Role()
+        {
+            this.Worker = new HashSet<Worker>();
+        }
     
-        public virtual TypeFooting TypeFooting { get; set; }
-        public virtual Worker Worker { get; set; }
+        public int IdRule { get; set; }
+        public string NameRole { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Worker> Worker { get; set; }
     }
 }

@@ -14,9 +14,10 @@ namespace Diplom.BD
     
     public partial class vm_WorkerBusinessTrip
     {
-        public string ФИО_сторудника { get; set; }
-        public System.DateTime Дата_начала_командировки { get; set; }
-        public int Кол_во_дней { get; set; }
-        public string Цель_поездки { get; set; }
+        public string FIO { get; set; }
+        public System.DateTime DateStartBus { get; set; }
+        public int QtyDayBus { get; set; }
+        public string PurposeOfTheTrip { get; set; }
+        public string Photo { get; set; }
     }
 }

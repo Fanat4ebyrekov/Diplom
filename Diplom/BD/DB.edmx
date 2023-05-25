@@ -89,6 +89,13 @@
           <Property Name="WorkerID" Type="int" Nullable="false" />
           <Property Name="Cost" Type="decimal" Precision="12" Scale="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="IdRule" />
+          </Key>
+          <Property Name="IdRule" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameRole" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -120,7 +127,7 @@
           <Property Name="IdVacation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WorkerID" Type="int" Nullable="false" />
           <Property Name="DateStart" Type="date" Nullable="false" />
-          <Property Name="DateEnd" Type="date" Nullable="false" />
+          <Property Name="DateEnd" Type="date" />
           <Property Name="AddTime" Type="int" />
           <Property Name="QtyDay" Type="int" Nullable="false" />
           <Property Name="FootingID" Type="int" Nullable="false" />
@@ -137,11 +144,14 @@
           <Property Name="Phone" Type="nvarchar" MaxLength="21" Nullable="false" />
           <Property Name="PassSer" Type="char" MaxLength="4" Nullable="false" />
           <Property Name="PassNum" Type="char" MaxLength="6" Nullable="false" />
-          <Property Name="DateStartWork" Type="date" Nullable="false" />
+          <Property Name="DateStartWork" Type="date" />
           <Property Name="Experience" Type="int" Nullable="false" />
           <Property Name="GenderID" Type="int" Nullable="false" />
           <Property Name="Photo" Type="nvarchar" MaxLength="500" />
           <Property Name="Email" Type="nvarchar" MaxLength="150" />
+          <Property Name="Password" Type="nvarchar" MaxLength="150" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="Address" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="WorkerPost">
           <Key>
@@ -158,15 +168,15 @@
 предупреждение 6002: В таблице или представлении "Agenstvo_3ISP11_16.dbo.vm_WorkerBusinessTrip" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="vm_WorkerBusinessTrip">
           <Key>
-            <PropertyRef Name="ФИО сторудника" />
-            <PropertyRef Name="Дата начала командировки" />
-            <PropertyRef Name="Кол-во дней" />
-            <PropertyRef Name="Цель поездки" />
+            <PropertyRef Name="DateStartBus" />
+            <PropertyRef Name="QtyDayBus" />
+            <PropertyRef Name="PurposeOfTheTrip" />
           </Key>
-          <Property Name="ФИО сторудника" Type="varchar" MaxLength="152" Nullable="false" />
-          <Property Name="Дата начала командировки" Type="date" Nullable="false" />
-          <Property Name="Кол-во дней" Type="int" Nullable="false" />
-          <Property Name="Цель поездки" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="FIO" Type="varchar" MaxLength="54" />
+          <Property Name="DateStartBus" Type="date" Nullable="false" />
+          <Property Name="QtyDayBus" Type="int" Nullable="false" />
+          <Property Name="PurposeOfTheTrip" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "Agenstvo_3ISP11_16.dbo.vw_Post" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -199,15 +209,15 @@
 предупреждение 6002: В таблице или представлении "Agenstvo_3ISP11_16.dbo.vw_WorkerVocation" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="vw_WorkerVocation">
           <Key>
-            <PropertyRef Name="ФИО сторудника" />
-            <PropertyRef Name="Дата начала отпуска" />
-            <PropertyRef Name="Кол-во дней" />
-            <PropertyRef Name="Тип отпуска" />
+            <PropertyRef Name="DateStartVoc" />
+            <PropertyRef Name="QtyDayVac" />
+            <PropertyRef Name="Footing" />
           </Key>
-          <Property Name="ФИО сторудника" Type="varchar" MaxLength="152" Nullable="false" />
-          <Property Name="Дата начала отпуска" Type="date" Nullable="false" />
-          <Property Name="Кол-во дней" Type="int" Nullable="false" />
-          <Property Name="Тип отпуска" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FIO" Type="varchar" MaxLength="54" />
+          <Property Name="DateStartVoc" Type="date" Nullable="false" />
+          <Property Name="QtyDayVac" Type="int" Nullable="false" />
+          <Property Name="Footing" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <Association Name="FK_AddInformation_Worker">
           <End Role="Worker" Type="Self.Worker" Multiplicity="1" />
@@ -341,6 +351,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Worker_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Worker" Type="Self.Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="IdRule" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WorkerPost_Post">
           <End Role="Post" Type="Self.Post" Multiplicity="1" />
           <End Role="WorkerPost" Type="Self.WorkerPost" Multiplicity="*" />
@@ -446,6 +468,7 @@
           <EntitySet Name="MedicalExamination" EntityType="Self.MedicalExamination" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Price" EntityType="Self.Price" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeEducation" EntityType="Self.TypeEducation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeFooting" EntityType="Self.TypeFooting" Schema="dbo" store:Type="Tables" />
@@ -454,10 +477,11 @@
           <EntitySet Name="WorkerPost" EntityType="Self.WorkerPost" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vm_WorkerBusinessTrip" EntityType="Self.vm_WorkerBusinessTrip" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [vm_WorkerBusinessTrip].[ФИО сторудника] AS [ФИО сторудника], 
-    [vm_WorkerBusinessTrip].[Дата начала командировки] AS [Дата начала командировки], 
-    [vm_WorkerBusinessTrip].[Кол-во дней] AS [Кол-во дней], 
-    [vm_WorkerBusinessTrip].[Цель поездки] AS [Цель поездки]
+    [vm_WorkerBusinessTrip].[FIO] AS [FIO], 
+    [vm_WorkerBusinessTrip].[DateStartBus] AS [DateStartBus], 
+    [vm_WorkerBusinessTrip].[QtyDayBus] AS [QtyDayBus], 
+    [vm_WorkerBusinessTrip].[PurposeOfTheTrip] AS [PurposeOfTheTrip], 
+    [vm_WorkerBusinessTrip].[Photo] AS [Photo]
     FROM [dbo].[vm_WorkerBusinessTrip] AS [vm_WorkerBusinessTrip]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_Post" EntityType="Self.vw_Post" store:Type="Views" store:Schema="dbo">
@@ -479,10 +503,11 @@
           </EntitySet>
           <EntitySet Name="vw_WorkerVocation" EntityType="Self.vw_WorkerVocation" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [vw_WorkerVocation].[ФИО сторудника] AS [ФИО сторудника], 
-    [vw_WorkerVocation].[Дата начала отпуска] AS [Дата начала отпуска], 
-    [vw_WorkerVocation].[Кол-во дней] AS [Кол-во дней], 
-    [vw_WorkerVocation].[Тип отпуска] AS [Тип отпуска]
+    [vw_WorkerVocation].[FIO] AS [FIO], 
+    [vw_WorkerVocation].[DateStartVoc] AS [DateStartVoc], 
+    [vw_WorkerVocation].[QtyDayVac] AS [QtyDayVac], 
+    [vw_WorkerVocation].[Footing] AS [Footing], 
+    [vw_WorkerVocation].[Photo] AS [Photo]
     FROM [dbo].[vw_WorkerVocation] AS [vw_WorkerVocation]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_AddInformation_Worker" Association="Self.FK_AddInformation_Worker">
@@ -527,6 +552,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Worker_Gender" Association="Self.FK_Worker_Gender">
             <End Role="Gender" EntitySet="Gender" />
+            <End Role="Worker" EntitySet="Worker" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Worker_Role" Association="Self.FK_Worker_Role">
+            <End Role="Role" EntitySet="Role" />
             <End Role="Worker" EntitySet="Worker" />
           </AssociationSet>
           <AssociationSet Name="FK_WorkerPost_Post" Association="Self.FK_WorkerPost_Post">
@@ -606,6 +635,7 @@
           <EntitySet Name="MedicalExamination" EntityType="Model.MedicalExamination" />
           <EntitySet Name="Post" EntityType="Model.Post" />
           <EntitySet Name="Price" EntityType="Model.Price" />
+          <EntitySet Name="Role" EntityType="Model.Role" />
           <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagrams" />
           <EntitySet Name="TypeEducation" EntityType="Model.TypeEducation" />
           <EntitySet Name="TypeFooting" EntityType="Model.TypeFooting" />
@@ -655,6 +685,10 @@
             <End Role="Worker" EntitySet="Worker" />
             <End Role="Price" EntitySet="Price" />
           </AssociationSet>
+          <AssociationSet Name="FK_Worker_Role" Association="Model.FK_Worker_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Worker" EntitySet="Worker" />
+          </AssociationSet>
           <AssociationSet Name="FK_Vacation_TypeFooting" Association="Model.FK_Vacation_TypeFooting">
             <End Role="TypeFooting" EntitySet="TypeFooting" />
             <End Role="Vacation" EntitySet="Vacation" />
@@ -667,7 +701,7 @@
             <End Role="Worker" EntitySet="Worker" />
             <End Role="WorkerPost" EntitySet="WorkerPost" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="pr_SalaryForMoth_Result">
           <Property Type="String" Name="FIO" Nullable="true" MaxLength="54" />
           <Property Type="Decimal" Name="Зарплата_за_месяц" Nullable="true" Precision="22" Scale="3" />
@@ -779,6 +813,14 @@
           <Property Name="Cost" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
           <NavigationProperty Name="Worker" Relationship="Model.FK_Price_Worker" FromRole="Price" ToRole="Worker" />
         </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="IdRule" />
+          </Key>
+          <Property Name="IdRule" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRole" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Worker" Relationship="Model.FK_Worker_Role" FromRole="Role" ToRole="Worker" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -812,7 +854,7 @@
           <Property Name="IdVacation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="WorkerID" Type="Int32" Nullable="false" />
           <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateEnd" Type="DateTime" Precision="0" />
           <Property Name="AddTime" Type="Int32" />
           <Property Name="QtyDay" Type="Int32" Nullable="false" />
           <Property Name="FootingID" Type="Int32" Nullable="false" />
@@ -831,17 +873,21 @@
           <Property Name="Phone" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="true" />
           <Property Name="PassSer" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
           <Property Name="PassNum" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Name="DateStartWork" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateStartWork" Type="DateTime" Precision="0" />
           <Property Name="Experience" Type="Int32" Nullable="false" />
           <Property Name="GenderID" Type="Int32" Nullable="false" />
           <Property Name="Photo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AddInformation" Relationship="Model.FK_AddInformation_Worker" FromRole="Worker" ToRole="AddInformation" />
           <NavigationProperty Name="BusinessTrip" Relationship="Model.FK_BusinessTrip_Worker" FromRole="Worker" ToRole="BusinessTrip" />
           <NavigationProperty Name="EducationWorker" Relationship="Model.FK_EducationWorker_Worker" FromRole="Worker" ToRole="EducationWorker" />
           <NavigationProperty Name="Gender" Relationship="Model.FK_Worker_Gender" FromRole="Worker" ToRole="Gender" />
           <NavigationProperty Name="MedicalExamination" Relationship="Model.FK_MedicalExamination_Worker" FromRole="Worker" ToRole="MedicalExamination" />
           <NavigationProperty Name="Price" Relationship="Model.FK_Price_Worker" FromRole="Worker" ToRole="Price" />
+          <NavigationProperty Name="Role" Relationship="Model.FK_Worker_Role" FromRole="Worker" ToRole="Role" />
           <NavigationProperty Name="Vacation" Relationship="Model.FK_Vacation_Worker" FromRole="Worker" ToRole="Vacation" />
           <NavigationProperty Name="WorkerPost" Relationship="Model.FK_WorkerPost_Worker" FromRole="Worker" ToRole="WorkerPost" />
         </EntityType>
@@ -860,15 +906,15 @@
         </EntityType>
         <EntityType Name="vm_WorkerBusinessTrip">
           <Key>
-            <PropertyRef Name="ФИО_сторудника" />
-            <PropertyRef Name="Дата_начала_командировки" />
-            <PropertyRef Name="Кол_во_дней" />
-            <PropertyRef Name="Цель_поездки" />
+            <PropertyRef Name="DateStartBus" />
+            <PropertyRef Name="QtyDayBus" />
+            <PropertyRef Name="PurposeOfTheTrip" />
           </Key>
-          <Property Name="ФИО_сторудника" Type="String" Nullable="false" MaxLength="152" FixedLength="false" Unicode="false" />
-          <Property Name="Дата_начала_командировки" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Кол_во_дней" Type="Int32" Nullable="false" />
-          <Property Name="Цель_поездки" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FIO" Type="String" MaxLength="54" FixedLength="false" Unicode="false" />
+          <Property Name="DateStartBus" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="QtyDayBus" Type="Int32" Nullable="false" />
+          <Property Name="PurposeOfTheTrip" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vw_Post">
           <Key>
@@ -897,15 +943,15 @@
         </EntityType>
         <EntityType Name="vw_WorkerVocation">
           <Key>
-            <PropertyRef Name="ФИО_сторудника" />
-            <PropertyRef Name="Дата_начала_отпуска" />
-            <PropertyRef Name="Кол_во_дней" />
-            <PropertyRef Name="Тип_отпуска" />
+            <PropertyRef Name="DateStartVoc" />
+            <PropertyRef Name="QtyDayVac" />
+            <PropertyRef Name="Footing" />
           </Key>
-          <Property Name="ФИО_сторудника" Type="String" Nullable="false" MaxLength="152" FixedLength="false" Unicode="false" />
-          <Property Name="Дата_начала_отпуска" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Кол_во_дней" Type="Int32" Nullable="false" />
-          <Property Name="Тип_отпуска" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FIO" Type="String" MaxLength="54" FixedLength="false" Unicode="false" />
+          <Property Name="DateStartVoc" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="QtyDayVac" Type="Int32" Nullable="false" />
+          <Property Name="Footing" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_AddInformation_Worker">
           <End Type="Model.Worker" Role="Worker" Multiplicity="1" />
@@ -1027,6 +1073,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Worker_Role">
+          <End Type="Model.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="Model.Worker" Role="Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="IdRule" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Vacation_TypeFooting">
           <End Type="Model.TypeFooting" Role="TypeFooting" Multiplicity="1" />
           <End Type="Model.Vacation" Role="Vacation" Multiplicity="*" />
@@ -1063,7 +1121,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1213,6 +1271,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="Model.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="NameRole" ColumnName="NameRole" />
+                <ScalarProperty Name="IdRule" ColumnName="IdRule" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="Model.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -1256,6 +1322,9 @@
           <EntitySetMapping Name="Worker">
             <EntityTypeMapping TypeName="Model.Worker">
               <MappingFragment StoreEntitySet="Worker">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="GenderID" ColumnName="GenderID" />
@@ -1287,10 +1356,11 @@
           <EntitySetMapping Name="vm_WorkerBusinessTrip">
             <EntityTypeMapping TypeName="Model.vm_WorkerBusinessTrip">
               <MappingFragment StoreEntitySet="vm_WorkerBusinessTrip">
-                <ScalarProperty Name="Цель_поездки" ColumnName="Цель поездки" />
-                <ScalarProperty Name="Кол_во_дней" ColumnName="Кол-во дней" />
-                <ScalarProperty Name="Дата_начала_командировки" ColumnName="Дата начала командировки" />
-                <ScalarProperty Name="ФИО_сторудника" ColumnName="ФИО сторудника" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="PurposeOfTheTrip" ColumnName="PurposeOfTheTrip" />
+                <ScalarProperty Name="QtyDayBus" ColumnName="QtyDayBus" />
+                <ScalarProperty Name="DateStartBus" ColumnName="DateStartBus" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1316,14 +1386,15 @@
           <EntitySetMapping Name="vw_WorkerVocation">
             <EntityTypeMapping TypeName="Model.vw_WorkerVocation">
               <MappingFragment StoreEntitySet="vw_WorkerVocation">
-                <ScalarProperty Name="Тип_отпуска" ColumnName="Тип отпуска" />
-                <ScalarProperty Name="Кол_во_дней" ColumnName="Кол-во дней" />
-                <ScalarProperty Name="Дата_начала_отпуска" ColumnName="Дата начала отпуска" />
-                <ScalarProperty Name="ФИО_сторудника" ColumnName="ФИО сторудника" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Footing" ColumnName="Footing" />
+                <ScalarProperty Name="QtyDayVac" ColumnName="QtyDayVac" />
+                <ScalarProperty Name="DateStartVoc" ColumnName="DateStartVoc" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

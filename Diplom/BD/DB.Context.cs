@@ -36,6 +36,7 @@ namespace Diplom.BD
         public virtual DbSet<MedicalExamination> MedicalExamination { get; set; }
         public virtual DbSet<Post> Post { get; set; }
         public virtual DbSet<Price> Price { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TypeEducation> TypeEducation { get; set; }
         public virtual DbSet<TypeFooting> TypeFooting { get; set; }
@@ -45,6 +46,8 @@ namespace Diplom.BD
         public virtual DbSet<vm_WorkerBusinessTrip> vm_WorkerBusinessTrip { get; set; }
         public virtual DbSet<vw_Post> vw_Post { get; set; }
         public virtual DbSet<vw_WorkerVocation> vw_WorkerVocation { get; set; }
+
+        
     
         [DbFunction("Entities", "fn_SalaryForMoth")]
         public virtual IQueryable<fn_SalaryForMoth_Result> fn_SalaryForMoth()
