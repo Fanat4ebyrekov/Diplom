@@ -17,7 +17,7 @@ namespace Diplom.BD
         public int IdWorkerPost { get; set; }
         public int WorkerID { get; set; }
         public int PostID { get; set; }
-        public System.DateTime DateStartPost { get; set; }
+        public Nullable<System.DateTime> DateStartPost { get; set; }
         public Nullable<System.DateTime> DateEndPost { get; set; }
         public string Example { get; set; }
     

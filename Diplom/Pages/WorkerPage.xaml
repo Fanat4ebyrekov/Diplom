@@ -79,7 +79,7 @@
             </Button.Resources>
         </Button>
 
-        <Button x:Name="btnAddPost1"
+        <Button x:Name="btnEditPost"
                 Grid.RowSpan="2"
             Height="30"
                 Width="100"
@@ -88,7 +88,7 @@
                 Margin="0 70 170 0"
                 FontSize="9"
                 Content="Изменить"
-                Click="btnAddPost_Click">
+                Click="btnEditPost_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -96,7 +96,7 @@
             </Button.Resources>
         </Button>
 
-        <Button x:Name="btnAddPost12"
+        <Button x:Name="btnDeleteWorker"
                 Grid.RowSpan="2"
             Height="30"
                 Width="100"
@@ -105,7 +105,7 @@
                 Margin="0 70 60 0"
                 FontSize="9"
                 Content="Удалить"
-                Click="btnAddPost_Click">
+                Click="btnDeleteWorker_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>

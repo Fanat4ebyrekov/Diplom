@@ -162,7 +162,7 @@
                             <TextBlock 
                                Grid.Column="1"
                                Grid.RowSpan="2"
-                               Text="2020-05-01"
+                               Text="{Binding Path=DateStartBus}"
                                FontSize="15"
                                Margin="10 0 0 10"
                                VerticalAlignment="Center"
@@ -184,7 +184,7 @@
                             <TextBlock 
                                Grid.Column="1"
                                Grid.RowSpan="2"
-                               Text="2020-05-16"
+                               Text="{Binding Path=DateEnd}"
                                FontSize="15"
                                Margin="250 0 0 10"
                                VerticalAlignment="Center"

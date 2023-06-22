@@ -57,6 +57,7 @@
             </Button>
 
             <TextBlock
+                x:Name="tbEditWorker"
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
@@ -67,6 +68,20 @@
                 Margin="20"
                 TextWrapping="Wrap" 
                 FontFamily="Segoe UI Semibold"
+                />
+            <TextBlock
+                x:Name="tbAddWorker"
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Text="Добавление сотрудника"
+                FontSize="28"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="20"
+                TextWrapping="Wrap" 
+                FontFamily="Segoe UI Semibold"
+                
                 />
             <Border
                 Grid.Row="1" 
@@ -453,7 +468,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 >
-                <Image x:Name="ImgEmployee" Source="/Images\Worker4.jpg"/>
+                <Image x:Name="ImgEmployee" Source="/Images\test2414.png"/>
             </Border>
             <Button
                 x:Name="ChoopePhoto"
@@ -532,7 +547,7 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Grid.Row="15"
-                Content="Изменить"
+                Content="Добавить"
                 Margin="10" 
                 FontSize="22"
                 Background="{x:Null}"  
@@ -541,18 +556,20 @@
                 Style="{StaticResource MyButtonStyle}"
                 Click="btnReg_Click"
                 />
-            <!--<Button
+            <Button
                 x:Name="btnEdit" 
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Grid.Row="15"
-                Content="Редактировать"
+                Content="Изменить"
                 Margin="10" 
                 FontSize="22"
                 Background="{x:Null}"  
                 BorderBrush="{x:Null}" 
-                Foreground="White"
-                />-->
+                Foreground="#FF8D9292"
+                Style="{StaticResource MyButtonStyle}"
+                Click="btnEdit_Click"
+                />
 
         </Grid>
     </Border>

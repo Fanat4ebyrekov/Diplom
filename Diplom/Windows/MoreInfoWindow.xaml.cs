@@ -32,8 +32,23 @@ namespace Diplom.Windows
             tbPhone.Text = vw_Post.Phone;
             tbPost.Text = vw_Post.Post;
             tbFIO.Text = vw_Post.FIO;
-
             
+
+            //if (vw_Post.Photo != null)
+            //{
+            //    using (MemoryStream stream = new MemoryStream(Convert.ToInt32(vw_Post.Photo)))
+            //    {
+            //        BitmapImage bitmapImage = new BitmapImage();
+            //        bitmapImage.BeginInit();
+            //        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            //        bitmapImage.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+            //        bitmapImage.StreamSource = stream;
+            //        bitmapImage.EndInit();
+            //        photoWorker.Source = bitmapImage;
+            //    }
+
+            //}
+
 
         }
 

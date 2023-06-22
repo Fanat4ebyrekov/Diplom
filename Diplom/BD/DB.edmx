@@ -25,9 +25,9 @@
           <Property Name="WorkerID" Type="int" Nullable="false" />
           <Property Name="PlaceOfBusinessTrip" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="NumberOrder" Type="int" Nullable="false" />
-          <Property Name="DateStart" Type="date" Nullable="false" />
-          <Property Name="DateEnd" Type="date" Nullable="false" />
-          <Property Name="QtyDay" Type="int" Nullable="false" />
+          <Property Name="DateStart" Type="datetime" Nullable="false" />
+          <Property Name="DateEnd" Type="datetime" Nullable="false" />
+          <Property Name="QtyDay" Type="int" />
           <Property Name="GoalTrip" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <EntityType Name="Department">
@@ -126,10 +126,10 @@
           </Key>
           <Property Name="IdVacation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WorkerID" Type="int" Nullable="false" />
-          <Property Name="DateStart" Type="date" Nullable="false" />
-          <Property Name="DateEnd" Type="date" />
+          <Property Name="DateStart" Type="datetime" Nullable="false" />
+          <Property Name="DateEnd" Type="datetime" />
           <Property Name="AddTime" Type="int" />
-          <Property Name="QtyDay" Type="int" Nullable="false" />
+          <Property Name="QtyDay" Type="int" />
           <Property Name="FootingID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Worker">
@@ -147,8 +147,8 @@
           <Property Name="DateStartWork" Type="date" />
           <Property Name="Experience" Type="int" Nullable="false" />
           <Property Name="GenderID" Type="int" Nullable="false" />
-          <Property Name="Photo" Type="nvarchar" MaxLength="500" />
-          <Property Name="Email" Type="nvarchar" MaxLength="150" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="150" />
           <Property Name="RoleID" Type="int" />
           <Property Name="Address" Type="nvarchar" MaxLength="150" />
@@ -160,7 +160,7 @@
           <Property Name="IdWorkerPost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WorkerID" Type="int" Nullable="false" />
           <Property Name="PostID" Type="int" Nullable="false" />
-          <Property Name="DateStartPost" Type="date" Nullable="false" />
+          <Property Name="DateStartPost" Type="datetime" />
           <Property Name="DateEndPost" Type="date" />
           <Property Name="Example" Type="varchar" MaxLength="50" />
         </EntityType>
@@ -169,14 +169,15 @@
         <EntityType Name="vm_WorkerBusinessTrip">
           <Key>
             <PropertyRef Name="DateStartBus" />
-            <PropertyRef Name="QtyDayBus" />
             <PropertyRef Name="PurposeOfTheTrip" />
+            <PropertyRef Name="DateEnd" />
           </Key>
           <Property Name="FIO" Type="varchar" MaxLength="54" />
-          <Property Name="DateStartBus" Type="date" Nullable="false" />
-          <Property Name="QtyDayBus" Type="int" Nullable="false" />
+          <Property Name="DateStartBus" Type="datetime" Nullable="false" />
+          <Property Name="QtyDayBus" Type="int" />
           <Property Name="PurposeOfTheTrip" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Photo" Type="nvarchar" MaxLength="500" />
+          <Property Name="DateEnd" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "Agenstvo_3ISP11_16.dbo.vw_Post" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -187,7 +188,8 @@
             <PropertyRef Name="Post" />
             <PropertyRef Name="Salary" />
             <PropertyRef Name="Department" />
-            <PropertyRef Name="DateStartPost" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="Photo" />
             <PropertyRef Name="Experience" />
             <PropertyRef Name="Birthday" />
           </Key>
@@ -197,11 +199,11 @@
           <Property Name="Post" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Salary" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="Department" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="DateStartPost" Type="date" Nullable="false" />
+          <Property Name="DateStartPost" Type="datetime" />
           <Property Name="DateEndPost" Type="date" />
           <Property Name="Example" Type="varchar" MaxLength="50" />
-          <Property Name="Email" Type="nvarchar" MaxLength="150" />
-          <Property Name="Photo" Type="nvarchar" MaxLength="500" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Experience" Type="int" Nullable="false" />
           <Property Name="Birthday" Type="date" Nullable="false" />
         </EntityType>
@@ -210,14 +212,14 @@
         <EntityType Name="vw_WorkerVocation">
           <Key>
             <PropertyRef Name="DateStartVoc" />
-            <PropertyRef Name="QtyDayVac" />
             <PropertyRef Name="Footing" />
           </Key>
           <Property Name="FIO" Type="varchar" MaxLength="54" />
-          <Property Name="DateStartVoc" Type="date" Nullable="false" />
-          <Property Name="QtyDayVac" Type="int" Nullable="false" />
+          <Property Name="DateStartVoc" Type="datetime" Nullable="false" />
+          <Property Name="QtyDayVac" Type="int" />
           <Property Name="Footing" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Photo" Type="nvarchar" MaxLength="500" />
+          <Property Name="DateEnd" Type="datetime" />
         </EntityType>
         <Association Name="FK_AddInformation_Worker">
           <End Role="Worker" Type="Self.Worker" Multiplicity="1" />
@@ -481,7 +483,8 @@
     [vm_WorkerBusinessTrip].[DateStartBus] AS [DateStartBus], 
     [vm_WorkerBusinessTrip].[QtyDayBus] AS [QtyDayBus], 
     [vm_WorkerBusinessTrip].[PurposeOfTheTrip] AS [PurposeOfTheTrip], 
-    [vm_WorkerBusinessTrip].[Photo] AS [Photo]
+    [vm_WorkerBusinessTrip].[Photo] AS [Photo], 
+    [vm_WorkerBusinessTrip].[DateEnd] AS [DateEnd]
     FROM [dbo].[vm_WorkerBusinessTrip] AS [vm_WorkerBusinessTrip]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_Post" EntityType="Self.vw_Post" store:Type="Views" store:Schema="dbo">
@@ -507,7 +510,8 @@
     [vw_WorkerVocation].[DateStartVoc] AS [DateStartVoc], 
     [vw_WorkerVocation].[QtyDayVac] AS [QtyDayVac], 
     [vw_WorkerVocation].[Footing] AS [Footing], 
-    [vw_WorkerVocation].[Photo] AS [Photo]
+    [vw_WorkerVocation].[Photo] AS [Photo], 
+    [vw_WorkerVocation].[DateEnd] AS [DateEnd]
     FROM [dbo].[vw_WorkerVocation] AS [vw_WorkerVocation]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_AddInformation_Worker" Association="Self.FK_AddInformation_Worker">
@@ -738,9 +742,9 @@
           <Property Name="WorkerID" Type="Int32" Nullable="false" />
           <Property Name="PlaceOfBusinessTrip" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="NumberOrder" Type="Int32" Nullable="false" />
-          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="QtyDay" Type="Int32" Nullable="false" />
+          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="QtyDay" Type="Int32" />
           <Property Name="GoalTrip" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Worker" Relationship="Model.FK_BusinessTrip_Worker" FromRole="BusinessTrip" ToRole="Worker" />
         </EntityType>
@@ -853,10 +857,10 @@
           </Key>
           <Property Name="IdVacation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="WorkerID" Type="Int32" Nullable="false" />
-          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DateEnd" Type="DateTime" Precision="0" />
+          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
           <Property Name="AddTime" Type="Int32" />
-          <Property Name="QtyDay" Type="Int32" Nullable="false" />
+          <Property Name="QtyDay" Type="Int32" />
           <Property Name="FootingID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TypeFooting" Relationship="Model.FK_Vacation_TypeFooting" FromRole="Vacation" ToRole="TypeFooting" />
           <NavigationProperty Name="Worker" Relationship="Model.FK_Vacation_Worker" FromRole="Vacation" ToRole="Worker" />
@@ -876,8 +880,8 @@
           <Property Name="DateStartWork" Type="DateTime" Precision="0" />
           <Property Name="Experience" Type="Int32" Nullable="false" />
           <Property Name="GenderID" Type="Int32" Nullable="false" />
-          <Property Name="Photo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="RoleID" Type="Int32" />
           <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
@@ -898,7 +902,7 @@
           <Property Name="IdWorkerPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="WorkerID" Type="Int32" Nullable="false" />
           <Property Name="PostID" Type="Int32" Nullable="false" />
-          <Property Name="DateStartPost" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateStartPost" Type="DateTime" Precision="3" />
           <Property Name="DateEndPost" Type="DateTime" Precision="0" />
           <Property Name="Example" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Post" Relationship="Model.FK_WorkerPost_Post" FromRole="WorkerPost" ToRole="Post" />
@@ -907,14 +911,15 @@
         <EntityType Name="vm_WorkerBusinessTrip">
           <Key>
             <PropertyRef Name="DateStartBus" />
-            <PropertyRef Name="QtyDayBus" />
             <PropertyRef Name="PurposeOfTheTrip" />
+            <PropertyRef Name="DateEnd" />
           </Key>
           <Property Name="FIO" Type="String" MaxLength="54" FixedLength="false" Unicode="false" />
-          <Property Name="DateStartBus" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="QtyDayBus" Type="Int32" Nullable="false" />
+          <Property Name="DateStartBus" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="QtyDayBus" Type="Int32" />
           <Property Name="PurposeOfTheTrip" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Photo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="vw_Post">
           <Key>
@@ -923,7 +928,8 @@
             <PropertyRef Name="Post" />
             <PropertyRef Name="Salary" />
             <PropertyRef Name="Department" />
-            <PropertyRef Name="DateStartPost" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="Photo" />
             <PropertyRef Name="Experience" />
             <PropertyRef Name="Birthday" />
           </Key>
@@ -933,25 +939,25 @@
           <Property Name="Post" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Salary" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
           <Property Name="Department" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="DateStartPost" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateStartPost" Type="DateTime" Precision="3" />
           <Property Name="DateEndPost" Type="DateTime" Precision="0" />
           <Property Name="Example" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Photo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Experience" Type="Int32" Nullable="false" />
           <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="vw_WorkerVocation">
           <Key>
             <PropertyRef Name="DateStartVoc" />
-            <PropertyRef Name="QtyDayVac" />
             <PropertyRef Name="Footing" />
           </Key>
           <Property Name="FIO" Type="String" MaxLength="54" FixedLength="false" Unicode="false" />
-          <Property Name="DateStartVoc" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="QtyDayVac" Type="Int32" Nullable="false" />
+          <Property Name="DateStartVoc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="QtyDayVac" Type="Int32" />
           <Property Name="Footing" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Photo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_AddInformation_Worker">
           <End Type="Model.Worker" Role="Worker" Multiplicity="1" />
@@ -1356,6 +1362,7 @@
           <EntitySetMapping Name="vm_WorkerBusinessTrip">
             <EntityTypeMapping TypeName="Model.vm_WorkerBusinessTrip">
               <MappingFragment StoreEntitySet="vm_WorkerBusinessTrip">
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="PurposeOfTheTrip" ColumnName="PurposeOfTheTrip" />
                 <ScalarProperty Name="QtyDayBus" ColumnName="QtyDayBus" />
@@ -1386,6 +1393,7 @@
           <EntitySetMapping Name="vw_WorkerVocation">
             <EntityTypeMapping TypeName="Model.vw_WorkerVocation">
               <MappingFragment StoreEntitySet="vw_WorkerVocation">
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="Footing" ColumnName="Footing" />
                 <ScalarProperty Name="QtyDayVac" ColumnName="QtyDayVac" />

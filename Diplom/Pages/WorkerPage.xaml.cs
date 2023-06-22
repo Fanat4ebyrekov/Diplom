@@ -35,8 +35,13 @@ namespace Diplom.Pages
         {
             InitializeComponent();
             AllWorker.ItemsSource = context.vw_Post.ToList();
-            
 
+            btnEditPost.Visibility = Visibility.Hidden;
+            btnEditPost.IsEnabled = false;
+
+            btnDeleteWorker.Visibility = Visibility.Hidden;
+            btnDeleteWorker.IsEnabled = false;
+           
             var worker = context.Worker.ToList();
 
         }
@@ -87,6 +92,33 @@ namespace Diplom.Pages
             }
             AddWorkerPostWindow addWorkerPostWindow = new AddWorkerPostWindow();
             addWorkerPostWindow.Show();
+        }
+
+        private void btnEditPost_Click(object sender, RoutedEventArgs e)
+        {
+            if (AllWorker.SelectedItem is BD.Worker employee)
+            {
+                var resMass = MessageBox.Show($"Вы хотите изменить сотрудника {employee.FullName}", "Предупреждение", MessageBoxButton.YesNo);
+                if (resMass == MessageBoxResult.Yes)
+                {
+                    AddWorkerWindow addEmployee = new AddWorkerWindow(employee);
+                    PersonalDate.IdWorker = employee.IdWorker;
+                    addEmployee.ShowDialog();
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show($"Вы не выбрали сотруднка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void btnDeleteWorker_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

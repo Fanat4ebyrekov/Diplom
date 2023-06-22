@@ -171,7 +171,8 @@
                 Height="40"
                 Content="Добавить"
                 FontSize="15"
-                Background="#FF4BA7F7">
+                Background="#FF4BA7F7"
+                Click="btnAddPost_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -185,7 +186,8 @@
                 Height="40"
                 Content="Уволить"
                 FontSize="15"
-                Background="#FF4BA7F7">
+                Background="#FF4BA7F7"
+                Click="btnRemovePost_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>

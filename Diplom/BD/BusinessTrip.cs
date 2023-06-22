@@ -20,7 +20,7 @@ namespace Diplom.BD
         public int NumberOrder { get; set; }
         public System.DateTime DateStart { get; set; }
         public System.DateTime DateEnd { get; set; }
-        public int QtyDay { get; set; }
+        public Nullable<int> QtyDay { get; set; }
         public string GoalTrip { get; set; }
     
         public virtual Worker Worker { get; set; }

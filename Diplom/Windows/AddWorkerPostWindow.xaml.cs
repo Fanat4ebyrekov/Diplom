@@ -68,5 +68,41 @@ namespace Diplom.Windows
         {
             this.Close();
         }
+
+        private void btnAddPost_Click(object sender, RoutedEventArgs e)
+        {
+            BD.WorkerPost workerpost = new BD.WorkerPost();
+
+            workerpost.WorkerID = cbWorker.SelectedIndex + 1;
+            workerpost.PostID = cbWorkerPost.SelectedIndex + 1;
+
+            //if (!string.IsNullOrWhiteSpace(dpStartWork.Text))
+            //{
+            //    workerpost.DateStartPost = Convert.ToDateTime(dpStartWork.Text);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Не введена дата начало работы", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
+
+            MessageBox.Show("Должность добавлена");
+            context.WorkerPost.Add(workerpost);
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            this.Close();
+        }
+
+        private void btnRemovePost_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

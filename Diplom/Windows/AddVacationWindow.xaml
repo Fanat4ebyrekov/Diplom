@@ -24,6 +24,14 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.ColumnSpan="2"
+                   Text="Добавление отпуске"
+                   FontSize="30"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+            />
+
+        <TextBlock x:Name="tbEditVac"
+            Grid.ColumnSpan="2"
                    Text="Изменение данных об отпуске"
                    FontSize="30"
                    HorizontalAlignment="Center"
@@ -58,7 +66,7 @@
             />
 
         <ComboBox 
-            x:Name="tbWorkers"
+            x:Name="cbWorkers"
             Grid.Row="1"
             Height="50"
             Width="300"
@@ -78,7 +86,7 @@
             />
 
         <ComboBox 
-            x:Name="tbFooting"
+            x:Name="cbFooting"
             Grid.Column="1"
             Grid.Row="1"
             Height="50"
@@ -99,6 +107,7 @@
             />
 
         <DatePicker 
+            x:Name="dpStartVac"
             Grid.Column="0"
             Grid.Row="2"
             Height="50"
@@ -120,6 +129,7 @@
             />
 
         <DatePicker 
+            x:Name="dpEndVoc"
             Grid.Column="1"
             Grid.Row="2"
             Height="50"
@@ -139,8 +149,28 @@
             Width="200" 
             Foreground="White" 
             BorderBrush="White"
+            Content="Добавить"
+            FontSize="23"
+            Click="btnAddVac_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button 
+            x:Name="btnEditVac"
+            Background="#FF4BC4F7"
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Height="50"
+            Width="200" 
+            Foreground="White" 
+            BorderBrush="White"
             Content="Изменить"
-            FontSize="23">
+            FontSize="23"
+            Click="btnEditVac_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>

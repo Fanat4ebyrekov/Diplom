@@ -20,7 +20,7 @@ namespace Diplom.BD
         public string Post { get; set; }
         public decimal Salary { get; set; }
         public string Department { get; set; }
-        public System.DateTime DateStartPost { get; set; }
+        public Nullable<System.DateTime> DateStartPost { get; set; }
         public Nullable<System.DateTime> DateEndPost { get; set; }
         public string Example { get; set; }
         public string Email { get; set; }

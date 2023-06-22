@@ -17,6 +17,7 @@ using static Diplom.Clases.ClassEntity;
 using Diplom.BD;
 using Diplom.Windows;
 
+
 namespace Diplom.Pages
 {
     /// <summary>
@@ -24,7 +25,6 @@ namespace Diplom.Pages
     /// </summary>
     public partial class VacationPage : Page
     {
-      
 
         public VacationPage(Windows.MainWindow mainWindow)
         {
@@ -48,6 +48,34 @@ namespace Diplom.Pages
             AddVacationWindow addVacationWindow = new AddVacationWindow();
             addVacationWindow.Show();
             
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+            //if (AllWorker.SelectedItem is BD.Vacation vaccation)
+            //{
+            //    var resMass = MessageBox.Show($"Вы хотите изменить данные об отпуске {vaccation.FullName}", "Предупреждение", MessageBoxButton.YesNo);
+            //    if (resMass == MessageBoxResult.Yes)
+            //    {
+            //        AddWorkerWindow addEmployee = new AddWorkerWindow(vaccation);
+            //        addEmployee.IdWorker = employee.IdWorker;
+            //        addEmployee.ShowDialog();
+            //    }
+            //    else
+            //    {
+            //        return;
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show($"Вы не выбрали сотруднка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            //}
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

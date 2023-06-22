@@ -5,25 +5,25 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8de4e221f08b4107a71d5a99a49680ee" Name="Diagram1" ZoomLevel="97">
-        <EntityTypeShape EntityType="Model.AddInformation" Width="1.5" PointX="5.25" PointY="23.125" />
-        <EntityTypeShape EntityType="Model.BusinessTrip" Width="1.5" PointX="5.25" PointY="26.5" />
-        <EntityTypeShape EntityType="Model.Department" Width="1.5" PointX="3.75" PointY="5.125" />
-        <EntityTypeShape EntityType="Model.Education" Width="1.5" PointX="6" PointY="0.75" />
-        <EntityTypeShape EntityType="Model.EducationWorker" Width="1.5" PointX="8.25" PointY="13" />
-        <EntityTypeShape EntityType="Model.Gender" Width="1.5" PointX="0.75" PointY="10.125" />
-        <EntityTypeShape EntityType="Model.MedicalExamination" Width="1.5" PointX="5.25" PointY="17" />
-        <EntityTypeShape EntityType="Model.Post" Width="1.5" PointX="6" PointY="4.875" />
-        <EntityTypeShape EntityType="Model.Price" Width="1.5" PointX="5.25" PointY="8.125" />
-        <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="0.75" PointY="13.125" />
-        <EntityTypeShape EntityType="Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="2.25" />
-        <EntityTypeShape EntityType="Model.TypeEducation" Width="1.5" PointX="3.75" PointY="2.25" />
-        <EntityTypeShape EntityType="Model.TypeFooting" Width="1.5" PointX="3" PointY="8.125" />
-        <EntityTypeShape EntityType="Model.Vacation" Width="1.5" PointX="5.25" PointY="12.5" />
-        <EntityTypeShape EntityType="Model.Worker" Width="1.5" PointX="3" PointY="11" />
-        <EntityTypeShape EntityType="Model.WorkerPost" Width="1.5" PointX="8.25" PointY="9.625" />
-        <EntityTypeShape EntityType="Model.vm_WorkerBusinessTrip" Width="1.5" PointX="0.75" PointY="5.25" />
-        <EntityTypeShape EntityType="Model.vw_Post" Width="1.5" PointX="8.75" PointY="2.25" />
-        <EntityTypeShape EntityType="Model.vw_WorkerVocation" Width="1.5" PointX="10.75" PointY="2.25" />
+        <EntityTypeShape EntityType="Model.AddInformation" Width="1.5" PointX="5.25" PointY="19.625" />
+        <EntityTypeShape EntityType="Model.BusinessTrip" Width="1.5" PointX="5.25" PointY="6.625" />
+        <EntityTypeShape EntityType="Model.Department" Width="1.5" PointX="0.75" PointY="20.625" />
+        <EntityTypeShape EntityType="Model.Education" Width="1.5" PointX="3" PointY="16.25" />
+        <EntityTypeShape EntityType="Model.EducationWorker" Width="1.5" PointX="5.25" PointY="11.375" />
+        <EntityTypeShape EntityType="Model.Gender" Width="1.5" PointX="0.75" PointY="8.625" />
+        <EntityTypeShape EntityType="Model.MedicalExamination" Width="1.5" PointX="5.25" PointY="23" />
+        <EntityTypeShape EntityType="Model.Post" Width="1.5" PointX="3" PointY="20.375" />
+        <EntityTypeShape EntityType="Model.Price" Width="1.5" PointX="5.25" PointY="25.875" />
+        <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="0.75" PointY="11.625" />
+        <EntityTypeShape EntityType="Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.TypeEducation" Width="1.5" PointX="0.75" PointY="16.625" />
+        <EntityTypeShape EntityType="Model.TypeFooting" Width="1.5" PointX="6" PointY="3.625" />
+        <EntityTypeShape EntityType="Model.Vacation" Width="1.5" PointX="8.25" PointY="11" />
+        <EntityTypeShape EntityType="Model.Worker" Width="1.5" PointX="3" PointY="9.5" />
+        <EntityTypeShape EntityType="Model.WorkerPost" Width="1.5" PointX="5.25" PointY="14.125" />
+        <EntityTypeShape EntityType="Model.vm_WorkerBusinessTrip" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.vw_Post" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Model.vw_WorkerVocation" Width="1.5" PointX="7.75" PointY="6.75" />
         <AssociationConnector Association="Model.FK_AddInformation_Worker" />
         <AssociationConnector Association="Model.FK_BusinessTrip_Worker" />
         <AssociationConnector Association="Model.FK_Post_Department" />

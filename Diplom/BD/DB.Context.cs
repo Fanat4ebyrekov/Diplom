@@ -46,8 +46,6 @@ namespace Diplom.BD
         public virtual DbSet<vm_WorkerBusinessTrip> vm_WorkerBusinessTrip { get; set; }
         public virtual DbSet<vw_Post> vw_Post { get; set; }
         public virtual DbSet<vw_WorkerVocation> vw_WorkerVocation { get; set; }
-
-        
     
         [DbFunction("Entities", "fn_SalaryForMoth")]
         public virtual IQueryable<fn_SalaryForMoth_Result> fn_SalaryForMoth()

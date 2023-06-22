@@ -16,8 +16,9 @@ namespace Diplom.BD
     {
         public string FIO { get; set; }
         public System.DateTime DateStartBus { get; set; }
-        public int QtyDayBus { get; set; }
+        public Nullable<int> QtyDayBus { get; set; }
         public string PurposeOfTheTrip { get; set; }
         public string Photo { get; set; }
+        public System.DateTime DateEnd { get; set; }
     }
 }

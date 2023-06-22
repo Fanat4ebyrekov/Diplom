@@ -16,8 +16,9 @@ namespace Diplom.BD
     {
         public string FIO { get; set; }
         public System.DateTime DateStartVoc { get; set; }
-        public int QtyDayVac { get; set; }
+        public Nullable<int> QtyDayVac { get; set; }
         public string Footing { get; set; }
         public string Photo { get; set; }
+        public Nullable<System.DateTime> DateEnd { get; set; }
     }
 }

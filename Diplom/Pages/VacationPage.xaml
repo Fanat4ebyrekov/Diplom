@@ -27,7 +27,7 @@
             BorderBrush="{x:Null}" 
             SelectionBrush="{x:Null}"/>
 
-        <ComboBox 
+        <ComboBox x:Name="cbFiltr"
                   Height="40"
                   Width="220"
                   Margin="250 0 0 0"
@@ -40,7 +40,8 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Margin="10"
-                Content="Удалить">
+                Content="Удалить"
+                Click="btnDelete_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -69,7 +70,8 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Margin="0 0 120 0"
-                Content="Изменить">
+                Content="Изменить"
+                Click="btnEdit_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -161,7 +163,7 @@
                             <TextBlock 
                                Grid.Column="1"
                                Grid.RowSpan="2"
-                               Text="2020-05-01"
+                               Text="{Binding Path= DateStartVoc}"
                                FontSize="15"
                                Margin="10 0 0 10"
                                VerticalAlignment="Center"
@@ -183,7 +185,7 @@
                             <TextBlock 
                                Grid.Column="1"
                                Grid.RowSpan="2"
-                               Text="2020-05-16"
+                               Text="{Binding Path= DateEnd}"
                                FontSize="15"
                                Margin="200 0 0 10"
                                VerticalAlignment="Center"

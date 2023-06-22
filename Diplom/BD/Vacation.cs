@@ -19,7 +19,7 @@ namespace Diplom.BD
         public System.DateTime DateStart { get; set; }
         public Nullable<System.DateTime> DateEnd { get; set; }
         public Nullable<int> AddTime { get; set; }
-        public int QtyDay { get; set; }
+        public Nullable<int> QtyDay { get; set; }
         public int FootingID { get; set; }
     
         public virtual TypeFooting TypeFooting { get; set; }

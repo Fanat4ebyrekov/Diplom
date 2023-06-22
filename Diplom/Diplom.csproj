@@ -85,6 +85,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="BD\DB1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB.edmx</DependentUpon>
+    </Compile>
     <Compile Include="BD\Department.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
@@ -256,7 +261,7 @@
     </EmbeddedResource>
     <EntityDeploy Include="BD\DB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DB.Designer.cs</LastGenOutput>
+      <LastGenOutput>DB1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="BD\DB.edmx.diagram">
       <DependentUpon>DB.edmx</DependentUpon>
@@ -291,6 +296,7 @@
       <DependentUpon>DB.edmx</DependentUpon>
       <LastGenOutput>DB.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\test2414.png" />
     <Resource Include="Images\Worker1.jpg" />
     <Resource Include="Images\Worker2.jpg" />
     <Resource Include="Images\Worker3.jpg" />
